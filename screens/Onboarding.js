@@ -13,7 +13,7 @@ import Slides from "../hooks/Slides";
 import { SafeAreaView } from "react-native-safe-area-context";
 const { width, height } = Dimensions.get("screen");
 
-const Onboarding = ({ navigation }) => {
+const Onboarding = ({navigation} ) => {
 	const [currentId, setCurrentId] = useState(0);
 	const Ref = useRef(null);
 
@@ -32,7 +32,7 @@ const Onboarding = ({ navigation }) => {
 		}
 	};
 	const NavigateToApp = () => {
-		navigation.replace("Signup");
+		navigation.navigate("AuthOption");
 	};
 	const skip = () => {
 		const lastSlide = Slides.length - 1;
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
 	imagery: {
 		width: width - 10,
 		height: height * 0.5,
-		justifyContent:"center",
-		alignItems:"center"
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	texts: {
 		height: height * 0.18,

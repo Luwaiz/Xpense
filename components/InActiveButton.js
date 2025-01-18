@@ -24,5 +24,7 @@ const styles = StyleSheet.create({
         height:50,
         borderColor: colors.primary,
         borderWidth: 1,
+        minWidth:100
+
     },
 });
