@@ -4,8 +4,8 @@ import { colors } from "../hooks/Colours";
 
 const ActiveButton = ({ text, onPress, width }) => {
 	return (
-		<TouchableOpacity style={[styles.box,{width}]} onPress={onPress}>
-			<Text style={{ color: "white" }}>{text}</Text>
+		<TouchableOpacity style={[styles.box, { width }]} onPress={onPress}>
+			<Text style={styles.text}>{text}</Text>
 		</TouchableOpacity>
 	);
 };
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		height: 50,
-		minWidth:100
+		minWidth: 100,
 	},
+	text: { color: "white", fontSize: 16, fontWeight: "bold" },
 });

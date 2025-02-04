@@ -2,29 +2,28 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { colors } from "../hooks/Colours";
 
-const InActiveButton = ({ text, onPress,width }) => {
-    
-    return (
-        <TouchableOpacity style={[styles.box,{width}]} onPress={onPress}>
-            <Text style={{ color: colors.primary }}>{text}</Text>
-        </TouchableOpacity>
-    );
+const InActiveButton = ({ text, onPress, width }) => {
+	return (
+		<TouchableOpacity style={[styles.box, { width }]} onPress={onPress}>
+			<Text style={styles.text}>{text}</Text>
+		</TouchableOpacity>
+	);
 };
 
 export default InActiveButton;
 
 const styles = StyleSheet.create({
-    box: {
-        backgroundColor: "white",
-        padding: 10,
-        borderRadius: 10,
-        margin: 10,
-        alignItems: "center",
-        justifyContent: "center",
-        height:50,
-        borderColor: colors.primary,
-        borderWidth: 1.5,
-        minWidth:100
-
-    },
+	box: {
+		backgroundColor: "white",
+		padding: 10,
+		borderRadius: 10,
+		margin: 10,
+		alignItems: "center",
+		justifyContent: "center",
+		height: 50,
+		borderColor: colors.primary,
+		borderWidth: 1.5,
+		minWidth: 100,
+	},
+	text: { color: colors.primary, fontSize: 16, fontWeight: "bold" },
 });

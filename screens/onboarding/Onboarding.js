@@ -62,20 +62,19 @@ const Onboarding = ({ navigation }) => {
 								<Text style={styles.head}>{item.heading}</Text>
 								<Text style={styles.subHead}>{item.subHeading}</Text>
 							</View>
-							<Footer
-								Slides={Slides}
-								next={next}
-								NavigateToApp={NavigateToApp}
-								currentId={currentId}
-								skip={skip}
-							/>
 						</View>
 					);
 				}}
+			/>
+			<Footer
+				Slides={Slides}
+				next={next}
+				NavigateToApp={NavigateToApp}
+				currentId={currentId}
+				skip={skip}
 			/>
 		</SafeAreaView>
 	);
 };
 
 export default Onboarding;
-

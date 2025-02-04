@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../../hooks/Colours";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,9 +8,15 @@ import ActiveButton from "../../components/ActiveButton";
 import styles from "./Styles";
 
 const LogIn = ({ navigation }) => {
+
+	const navigateToPage= ()=>{
+		navigation.navigate("Verification")
+	}
 	return (
 		<SafeAreaView style={styles.container}>
+
 			<View style={styles.TopContainer}>
+			<Image source={require("../../assets/cardImage.png")} style={styles.Image}/>
 				<View style={styles.logo}>
 					<Xpense width={100} height={100} />
 				</View>
@@ -35,7 +41,7 @@ const LogIn = ({ navigation }) => {
 						</Text>
 					</Text>
 					<View style={styles.button}>
-						<ActiveButton text={"Log in"} />
+						<ActiveButton text={"Log in"} onPress={navigateToPage} />
 					</View>
 				</View>
 			</View>

@@ -8,6 +8,14 @@ import ActiveButton from "../../components/ActiveButton";
 import styles from "./Styles";
 
 const SignUp = ({ navigation }) => {
+
+	const NavigateToLogin = ()=>{
+		navigation.navigate("Login")
+	}	
+
+	const OTPVerification = () => {
+		navigation.navigate("OTP")
+	}
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.TopContainer}>
@@ -35,14 +43,14 @@ const SignUp = ({ navigation }) => {
 						Already have an account?
 						<Text
 							style={{ color: colors?.primary, fontWeight: "bold" }}
-							onPress={() => navigation.navigate("Login")}
+							onPress={() => NavigateToLogin()}
 						>
 							{" "}
 							Login
 						</Text>
 					</Text>
 					<View style={styles.button}>
-						<ActiveButton text={"Sign up"} />
+						<ActiveButton text={"Sign up"} onPress={()=>OTPVerification()} />
 					</View>
 				</View>
 			</View>

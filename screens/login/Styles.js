@@ -1,6 +1,5 @@
-import { StyleSheet} from 'react-native'
-import { colors } from '../../hooks/Colours';
-
+import { StyleSheet } from "react-native";
+import { colors } from "../../hooks/Colours";
 
 const styles = StyleSheet.create({
 	container: {
@@ -42,6 +41,15 @@ const styles = StyleSheet.create({
 	button: {
 		marginTop: 200,
 	},
+	Image: {
+		width: 300,
+		height: 300,
+		resizeMode: "cover",
+		position: "absolute",
+		right: -100,
+		top: -80,
+		transform: [{rotate:"-40deg" }],
+	},
 });
 
-export default styles
+export default styles;
