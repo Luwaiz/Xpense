@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
 	logo: {
 		position: "absolute",
 		left: 20,
+		top: 50,
+		bottom: 50,
 	},
 	SignUp: {
 		fontSize: 32,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		right: -100,
 		top: -80,
-		transform: [{rotate:"-40deg" }],
+		transform: [{ rotate: "-40deg" }],
 	},
 });
 

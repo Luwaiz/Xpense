@@ -21,7 +21,6 @@ const Onboarding = ({ navigation }) => {
 	const updateIndex = (e) => {
 		const offsetX = e.nativeEvent.contentOffset.x;
 		const currentIndex = Math.round(offsetX / width);
-		console.log("current page", currentIndex);
 		setCurrentId(currentIndex);
 	};
 	const next = () => {

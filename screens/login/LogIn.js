@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../../hooks/Colours";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,14 +14,13 @@ const LogIn = ({ navigation }) => {
 	}
 	return (
 		<SafeAreaView style={styles.container}>
+		<StatusBar barStyle={"light-content"}/>
 
 			<View style={styles.TopContainer}>
 			<Image source={require("../../assets/cardImage.png")} style={styles.Image}/>
 				<View style={styles.logo}>
 					<Xpense width={100} height={100} />
 				</View>
-				<Text style={styles.heading}></Text>
-				<Text style={styles.subheading}>Log in to access your account</Text>
 			</View>
 			<View style={styles.bottomContainer}>
 				<Text style={styles.SignUp}>Log in</Text>
