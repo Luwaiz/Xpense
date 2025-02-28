@@ -4,6 +4,7 @@ import { colors } from "../hooks/Colours";
 import ActiveButton from "./ActiveButton";
 import InActiveButton from "./InActiveButton";
 const { height, width } = Dimensions.get("window");
+
 const Footer = ({ currentId, Slides, next, NavigateToApp, skip }) => {
 	return (
 		<View style={styles.container}>
@@ -14,6 +15,7 @@ const Footer = ({ currentId, Slides, next, NavigateToApp, skip }) => {
 					marginBottom: 20,
 				}}
 			>
+			{/* using the index of slides to condition the indicators sizes */}
 				{Slides?.map((_, index) => (
 					<View
 						style={[
@@ -24,6 +26,8 @@ const Footer = ({ currentId, Slides, next, NavigateToApp, skip }) => {
 					/>
 				))}
 			</View>
+
+			{/* the two buttons for next and skip */}
 			<View style={styles.buttonContainer}>
 				{currentId !== Slides.length - 1 ? (
 					<InActiveButton

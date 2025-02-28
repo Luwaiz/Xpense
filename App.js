@@ -5,11 +5,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Navigation from "./navigation/Navigation";
 import TestImageUpload from "./screens/TestImageUpload";
 
+
 export default function App() {
 	return (
 		<GestureHandlerRootView style={styles.container}>
-			<SafeAreaProvider >
-				{/* <TestImageUpload /> */}
+			<SafeAreaProvider>
+				{/*Entrance to Main application  */}
 				<Navigation />
 				<StatusBar style="auto" />
 			</SafeAreaProvider>
@@ -20,6 +21,6 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor:"white"
+		backgroundColor: "white",
 	},
 });

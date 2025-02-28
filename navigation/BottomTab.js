@@ -7,7 +7,7 @@ import Transactions from "../screens/transactions/Transactions";
 import Profile from "../screens/profile/Profile";
 import TabHeader from "../components/TabHeader";
 import Foundation from "@expo/vector-icons/Foundation";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { colors } from "../hooks/Colours";
@@ -19,8 +19,8 @@ const BottomTab = () => {
 			screenOptions={{
 				header: ({ route }) => <TabHeader route={route} />,
 				tabBarStyle: styles.tabBarStyle,
-				tabBarBadge:"2",
-				tabBarHideOnKeyboard:true
+				// tabBarBadge:"2",
+				tabBarHideOnKeyboard: true,
 			}}
 		>
 			<Tab.Screen
@@ -56,9 +56,9 @@ const BottomTab = () => {
 				options={{
 					tabBarIcon: ({ focused }) => {
 						return (
-							<FontAwesome6
-								name="wallet"
-								size={23}
+							<MaterialCommunityIcons
+								name="piggy-bank"
+								size={30}
 								color={focused ? colors.primary : colors.primaryGrey}
 							/>
 						);
@@ -140,14 +140,11 @@ export default BottomTab;
 const styles = StyleSheet.create({
 	tabBarStyle: {
 		minHeight: 60,
-		paddingTop:5
+		paddingTop: 5,
 	},
 	tabBarLabelText: {
 		fontSize: 12,
 		fontWeight: "500",
 		marginTop: 5,
-		
 	},
-
-
 });

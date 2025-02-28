@@ -2,31 +2,25 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../hooks/Colours";
 
-const YearBar = () => {
-	const [selected, setSelected] = useState("Week");
-	const sectors = ["Week", "Month", "Year"];
+const YearBar = ({setOption,option, sector}) => {
+	const sectors = ["Weekly"];
 	return (
 		<View style={styles.container}>
-		
-			{sectors.map((item, index) => (
-				<Pressable
-					key={index}
+				<View
 					style={[
 						styles.bar,
-						{ backgroundColor: selected === item ? colors.primary : "white" },
+						{ backgroundColor: colors.primary},
 					]}
-					onPress={() => setSelected(item)}
 				>
 					<Text
 						style={[
 							styles.text,
-							{ color: selected === item ? "white" : "black" },
+							{ color:"white" },
 						]}
 					>
-						{item}
+						{sector}
 					</Text>
-				</Pressable>
-			))}
+				</View>
 		</View>
 	);
 };
@@ -38,7 +32,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		width: "90%",
 		borderRadius: 10,
-		justifyContent: "space-between",
+		justifyContent: "center",
 		height: 45,
 		padding: 5,
 		marginVertical: 20,

@@ -1,15 +1,11 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../hooks/Colours";
 
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "white",
-		alignItems: "center",
-	},
-	scroll: {
-		flex: 1,
-		width: "100%",
 	},
 	barContainer: {
 		height: "50%",
@@ -29,8 +25,6 @@ const styles = StyleSheet.create({
 	recent: {
 		fontSize: 18,
 		fontWeight: "bold",
-		alignSelf: "flex-start",
-		paddingLeft: 16,
 	},
 	underline: {
 		marginBottom: 40,
@@ -44,6 +38,23 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		height: 2,
 		backgroundColor: colors.primary,
+	},
+	recentBox: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		width: "100%",
+		paddingHorizontal: 16,
+		marginBottom: 10,
+	},
+	viewAll: {
+		fontSize: 14,
+		fontWeight: "500",
+		color: "#0066F5",
+	},
+	bottomContainer: {
+		flex:1,
+		width:"100%"
 	},
 });
 export default styles;

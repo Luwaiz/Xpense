@@ -6,6 +6,11 @@ import { colors } from "../hooks/Colours";
 import { useNavigation } from "@react-navigation/native";
 
 const TabHeader = ({ route }) => {
+	const balance = 39393939393
+
+	const addComma = (balance)=>{
+		return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	
 	const navigation = useNavigation();
 	const navigateBack = () => {
@@ -18,7 +23,7 @@ const TabHeader = ({ route }) => {
 					<View style={styles.circle}></View>
 					<View>
 						<Text style={styles.Name}>Hi, Florence</Text>
-						<Text style={styles.balance}>Balance: ₦ 302,2882.90</Text>
+						<Text style={styles.balance}>Balance: ₦ {addComma(balance)}</Text>
 					</View>
 				</View>
 			) : (

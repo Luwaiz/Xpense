@@ -1,52 +1,81 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
-import React from "react";
+import {
+	View,
+	Text,
+	ScrollView,
+	FlatList,
+	StatusBar,
+	TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import styles from "./Styles";
 import ATMCard from "../../components/ATMCard";
-import TransactionBox from "../../components/TransactionBox";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import TransactionList from "../../components/TransactionList";
+import axios from "axios";
+import API from "../../hooks/API";
+import AuthStore from "../../hooks/ZustandStore";
+import { colors } from "../../hooks/Colours";
 
-const HomePage = () => {
-	const data = [
-		{
-			amount: 200,
-			item: "Netflix",
-			date: "12/05/2022",
-			category: "Electronics",
-		},
-		{
-			amount: 500,
-            item: "Groceries",
-            date: "11/05/2022",
-            category: "Groceries",
-		},
-		{
-			amount: 300,
-            item: "Salary",
-            date: "10/05/2022",
-            category: "Salary",
-		},
-		{
-			amount: 150,
-            item: "Petrol",
-            date: "09/05/2022",
-            category: "Fuel",
+const HomePage = ({ navigation }) => {
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
+	const token = AuthStore((state) => state.token);
+
+	const getRecent = async () => {
+		setLoading(true);
+		const header = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		try {
+			const response = await axios.get(API.getRecentExpenses, header);
+			setData(response.data);
+			setLoading(false);
+		} catch (e) {
+			console.log("error", e);
+			setLoading(false);
 		}
-	];
-	
+	};
+
+	useEffect(() => {
+		getRecent();
+	}, []);
+	const Expense = () => {
+		navigation.navigate("Expense");
+	};
+	const Income = () => {
+		navigation.navigate("Budgets");
+	};
+
 	return (
 		<View style={styles.container}>
+			<StatusBar barStyle={"dark-content"} />
 			<ATMCard />
-			<View style={styles.options}></View>
-			<View style={styles.balance}></View>
+			<View style={styles.options}>
+				<TouchableOpacity
+					onPress={() => Expense()}
+					style={styles.optionContainer}
+				>
+					<View style={[styles.icon, { backgroundColor: colors.primary }]}>
+						<FontAwesome5 name="wallet" size={20} color="white" />
+					</View>
+					<Text style={styles.iconText}>Add Expense</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => Income()}
+					style={styles.optionContainer}
+				>
+					<View style={[styles.icon, { backgroundColor: "green" }]}>
+						<MaterialCommunityIcons name="piggy-bank" size={24} color="white" />
+					</View>
+					<Text style={styles.iconText}>Create Budget</Text>
+				</TouchableOpacity>
+			</View>
 			<Text style={styles.recentText}>Recent Transactions</Text>
-			<FlatList
-				data={data || []}
-				keyExtractor={(item, index) => index.toString()}
-				renderItem={({ item }) => <TransactionBox item={item}/>}
-				style={styles.scroll}
-				contentContainerStyle={styles.scrollContainer}
-				
-			/>
-
+			<TransactionList  data={data || []} fetchData={getRecent} refreshing={refreshing}/>
 		</View>
 	);
 };

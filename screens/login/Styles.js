@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
 	logo: {
 		position: "absolute",
 		left: 20,
-		top: 50,
 		bottom: 50,
 	},
 	SignUp: {

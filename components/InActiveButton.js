@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		height: 50,
 		borderColor: colors.primary,
-		borderWidth: 1.5,
+		borderWidth: 1,
 		minWidth: 100,
 	},
 	text: { color: colors.primary, fontSize: 16, fontWeight: "bold" },

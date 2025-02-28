@@ -8,6 +8,7 @@ import AppStack from "./AppStack";
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
+	// checking the state of the application if launched for the first time or not
 	const [firstLaunch, setFirstLaunch] = useState(true);
 
 	// const OnBoardState = async () => {
@@ -32,7 +33,10 @@ export default function Navigation() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
+				{/* conditionally rendering the Onboarding screen only on first launch */}
 				{firstLaunch && <Stack.Screen component={Onboarding} name="OnBoard" />}
+
+				{/* separation of Authentication screens and Application screens */}
 				<Stack.Screen component={AuthStack} name="AuthStack" />
 				<Stack.Screen component={AppStack} name="AppStack" />
 			</Stack.Navigator>

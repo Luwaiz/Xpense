@@ -9,20 +9,27 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { colors } from "../../hooks/Colours";
 import Footer from "../../components/Footer";
-import Slides from "../../hooks/Slides";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./Styles";
+import {Slides} from "../../hooks/Slides";
 const { width, height } = Dimensions.get("screen");
 
 const Onboarding = ({ navigation }) => {
+
+	// checking the current id of flatlist page
 	const [currentId, setCurrentId] = useState(0);
+
+	// useRef hook to hold the flatlist ref
 	const Ref = useRef(null);
 
+	// function to update the current id of the flatlist page
 	const updateIndex = (e) => {
 		const offsetX = e.nativeEvent.contentOffset.x;
 		const currentIndex = Math.round(offsetX / width);
 		setCurrentId(currentIndex);
 	};
+
+	// function to move to the next page of the flatlist
 	const next = () => {
 		const nextSlide = currentId + 1;
 		if (nextSlide !== Slides.length) {
@@ -31,16 +38,20 @@ const Onboarding = ({ navigation }) => {
 			setCurrentId(nextSlide);
 		}
 	};
-	const NavigateToApp = () => {
-		navigation.navigate("AuthStack", {
-			screen: "AuthOption",
-		});
-	};
+
+	// function to move to the last page of the flatlist (skip)
 	const skip = () => {
 		const lastSlide = Slides.length - 1;
 		const offset = lastSlide * width;
 		Ref?.current?.scrollToOffset({ offset });
 		setCurrentId(lastSlide);
+	};
+
+	// function to navigate to the app after completing the onboarding
+	const NavigateToApp = () => {
+		navigation.navigate("AuthStack", {
+			screen: "AuthOption",
+		});
 	};
 
 	return (
@@ -65,6 +76,7 @@ const Onboarding = ({ navigation }) => {
 					);
 				}}
 			/>
+			{/* footer aspect of the onboarding pages */}
 			<Footer
 				Slides={Slides}
 				next={next}

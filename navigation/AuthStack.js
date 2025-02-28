@@ -10,6 +10,7 @@ import PIN from "../screens/pin/PIN";
 import SuccessPin from "../screens/successPin/SuccessPin";
 const Stack = createNativeStackNavigator();
 
+// Authentication screens
 const AuthStack = () => {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
