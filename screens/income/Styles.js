@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 	},
 	text2: {
 		fontSize: 16,
-		color: colors.greyText,
+		color: colors.secondaryGrey,
 	},
 	dropdown: {
 		height: 48,

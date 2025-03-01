@@ -7,6 +7,7 @@ const TransactionList = ({ data, refreshing, fetchData }) => {
   return (
     <FlatList
       style={styles.scroll}
+      nestedScrollEnabled={true}
       data={data ?? []} // Prevent null issues
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item, index }) => <TransactionBox item={item} />}

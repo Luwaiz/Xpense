@@ -16,10 +16,12 @@ container: {
 		paddingBottom: 20,
 	},
 	budgetItem: {
-		backgroundColor: "#f8f8f8",
+		// backgroundColor: "#f8f8f8",
 		padding: 10,
 		marginBottom: 15,
 		borderRadius: 8,
+		borderWidth: 0.5,
+		borderColor: colors.primaryGrey,
 	},
 	itemHeader: {
 		flexDirection: "row",

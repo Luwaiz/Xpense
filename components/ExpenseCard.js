@@ -1,59 +1,74 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../hooks/Colours";
+import TransactionList from "./TransactionList";
 
-const ExpenseCard = ({ item}) => {
+const ExpenseCard = ({ item }) => {
+
+  const formatDate = (isoDate) => {
+    if (!isoDate) return "N/A"; // Return a fallback value if date is missing
+    const date = new Date(isoDate);
+    if (isNaN(date)) return "Invalid Date"; // Handle invalid date formats
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; 
+  };
+  
   return (
-    <View style={styles.card}>
-      <View style={styles.details}>
-        <Text style={styles.title}>{item?.title}</Text>
-        <Text style={styles.category}>{item?.category}</Text>
-      </View>
-      <View style={styles.amountContainer}>
-        <Text style={styles.amount}>₦{item?.amount}</Text>
-        <Text style={styles.date}>{item?.date}</Text>
-      </View>
-    </View>
-  );
+		<View style={styles.card}>
+			<View style={styles.topContainer}>
+				<View style={styles.details}>
+					<Text style={styles.title}>{item?.day}</Text>
+				</View>
+				<View style={styles.amountContainer}>
+					<Text style={styles.amount}>{item?.totalAmount}</Text>
+					<Text style={styles.date}>{item?.date ? formatDate(item?.date) : "nil"}</Text>
+				</View>
+			</View>
+			<TransactionList data={item?.expenses} />
+		</View>
+	);
 };
 
 export default ExpenseCard;
 
 const styles = StyleSheet.create({
-  card: {
-    marginHorizontal:16,
-    marginVertical:20,
-    backgroundColor: colors.secondaryGrey, // Use your theme colors
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+	card: {
+		flex: 1,
+		width: "100%",
+    marginTop:20,
+    borderTopColor: colors.primaryGrey,
+    borderTopWidth: 0.5,
+	},
+	title: {
+		fontSize: 16,
+		fontWeight: "bold",
+		color: "black",
+	},
+	category: {
+		fontSize: 14,
+		color: colors.greyText,
+	},
+	amountContainer: {
+		alignItems: "flex-end",
+	},
+	amount: {
+		fontSize: 16,
+		fontWeight: "bold",
+		color: colors.primaryGrey,
+	},
+	date: {
+		fontSize: 12,
+		color: colors.greyText,
+	},
+  topContainer: {
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   details: {
     flex: 1,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: colors.black,
-  },
-  category: {
-    fontSize: 14,
-    color: colors.greyText,
-  },
-  amountContainer: {
-    alignItems: "flex-end",
-  },
-  amount: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: colors.primaryGrey, // Use an appropriate color
-  },
-  date: {
-    fontSize: 12,
-    color: colors.greyText,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

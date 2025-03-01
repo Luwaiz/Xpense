@@ -1,45 +1,36 @@
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { BarChart } from "react-native-gifted-charts";
 import { colors } from "../hooks/Colours";
+
 const { width, height } = Dimensions.get("window");
-const GraphChart = ({ Data, option }) => {
+
+const GraphChart = ({ Data, option, setSelection }) => {
 	const today = new Date();
 	const dayName = today
 		.toLocaleDateString("en-US", { weekday: "long" })
 		.slice(0, 3); // "Mon"
-	const monthName = today.toLocaleDateString("en-US", { month: "short" }); // "Feb"
-
-	const initialSelect = option === "Weekly" ? dayName : monthName; // Decide based on option
 
 	const [selected, setSelected] = useState({
-		label: initialSelect,
-		fullData: Data.filter((data) =>
-			option === "Weekly"
-				? data?.day?.slice(0, 3) === initialSelect
-				: data?.month?.slice(0, 3) === initialSelect
-		),
+		label: dayName,
+		...Data.find((data) => data.day.slice(0, 3) === dayName) || {},
 	});
 
-	// Compute barData dynamically based on selection
-	const barData = Data.map((data) => {
-		const label =
-			option === "Weekly" ? data?.day?.slice(0, 3) : data?.month?.slice(0, 3);
-		return {
-			value: data.amount,
-			label: label,
-			frontColor:
-				selected.label === label ? colors.primary : colors.primaryGrey, // Change color when selected
-		};
-	});
+	// ✅ Use useMemo to ensure `barData` updates correctly when `selected` changes
+	const barData = useMemo(() => {
+		return (Data || []).map((data) => {
+			const label = data.day ? data.day.slice(0, 3) : "N/A"; // Safe fallback
+			return {
+				value: data.totalAmount || 0,
+				label: label,
+				frontColor: selected.label === label ? colors.primary : colors.primaryGrey, // ✅ Dynamically updates color
+			};
+		});
+	}, [Data, selected]);
 
-	const modifiedBarData = barData.map((item) => ({
-		...item,
-		value: item.value === 0 ? 100 : item?.value, // Set a minimum height
-	}));
-
+	// Update parent component when selection changes
 	useEffect(() => {
-		console.log("fulldata", selected);
+		setSelection(selected);
 	}, [selected]);
 
 	return (
@@ -49,19 +40,23 @@ const GraphChart = ({ Data, option }) => {
 					barWidth={30}
 					barBorderRadius={5}
 					frontColor={colors.primaryGrey}
-					data={modifiedBarData}
+					data={barData} // ✅ Now correctly updates
 					yAxisThickness={0}
 					xAxisThickness={0}
 					dashWidth={0}
 					yAxisTextStyle={{ display: "none" }}
-					onPress={(item, index) => {
-						const filteredData = Data.filter((data) =>
-							option === "Weekly"
-								? data?.day?.slice(0, 3) === item.label
-								: data?.month?.slice(0, 3) === item.label
+					onPress={(item) => {
+						const filteredData = Data.find(
+							(data) => data.day.slice(0, 3) === item.label
 						);
-						setSelected({ label: item.label, fullData: filteredData });
-					}} // Store both					initialSpacing={0}
+						if (filteredData) {
+							setSelected({
+								...filteredData, // ✅ Preserve all data fields
+								label: item.label, // ✅ Ensure label updates correctly
+							});
+						}
+					}}
+					initialSpacing={0}
 					yAxisLabelContainerStyle={{ width: 0 }}
 					yAxisTextNumberOfLines={0}
 					yAxisLabelWidth={0}

@@ -17,11 +17,11 @@ const Header = ({ title, color }) => {
 		navigation.goBack();
 	};
 	return (
-		<SafeAreaView style={[styles.container,{backgroundColor: title ==="Expense" || title ==="Budgets"? colors.primary : "white"}]}>
+		<SafeAreaView style={[styles.container,{backgroundColor: title ==="Expense" || title ==="Budgets" || title === "ExpenseDetails"? colors.primary : "white"}]}>
 			<TouchableOpacity onPress={navigateBack}>
-				<AntDesign name="arrowleft" size={24} color={title ==="Expense" || title ==="Budgets" ? "white" : "black"} />
+				<AntDesign name="arrowleft" size={24} color={title ==="Expense" || title ==="Budgets" || title === "ExpenseDetails" ? "white" : "black"} />
 			</TouchableOpacity>
-			<Text style={[styles.title,{color:title ==="Expense" || title ==="Budgets" ? "white" : "black"}]}>{title}</Text>
+			<Text style={[styles.title,{color:title ==="Expense" || title ==="Budgets" || title === "ExpenseDetails" ? "white" : "black"}]}>{title}</Text>
 		</SafeAreaView>
 	);
 };

@@ -30,7 +30,8 @@ const LogIn = ({ navigation }) => {
 	};
 	const navigateToHome = () => {
 		navigation.navigate("AppStack", {
-			screen: "HomePage",params: {
+			screen: "HomePage",
+			params: {
 				screen: "Home",
 			},
 		});
@@ -54,7 +55,7 @@ const LogIn = ({ navigation }) => {
 				setLoading(false);
 				navigateToHome();
 			} catch (e) {
-				console.log("error",e.response.data);
+				console.log("error", e.response.status);
 				setError("Failed to log in");
 				setLoading(false);
 			}

@@ -52,7 +52,7 @@ const Budget = ({ navigation }) => {
 	}, []);
 
 	const CreateBudget = () => {
-		navigation.navigate("Income");
+		navigation.navigate("Budgets");
 	};
 	const ViewExpenses = async (BudgetId) => {
 		if (BudgetId !== "") {
