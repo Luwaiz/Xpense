@@ -29,6 +29,15 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		textAlign: "center",
 	},
+	Image: {
+		width: 300,
+		height: 300,
+		resizeMode: "cover",
+		position: "absolute",
+		left: "28%",
+		top: "-12%",
+		transform: [{ rotate: "-40deg" }],
+	},
 });
 
 export default styles;

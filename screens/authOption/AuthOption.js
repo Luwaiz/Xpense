@@ -8,17 +8,26 @@ import Xpense from "../../assets/svg/XpenseLogo.svg";
 import styles from "./Styles";
 
 const AuthOption = ({ navigation }) => {
+	// function	to navigate to login page
 	const ToLogin = () => {
 		navigation.navigate("Login");
 	};
+
+	// function to navigate to signup page
 	const ToSignup = () => {
 		navigation.navigate("SignUp");
 	};
 	return (
 		<View style={styles.container}>
 			<View style={styles.topContainer}>
+			<Image
+					source={require("../../assets/cardImage.png")}
+					style={styles.Image}
+				/>
 				<Xpense />
 			</View>
+
+			{/* bottom sheet containing the buttons */}
 			<BottomSheet
 				backgroundStyle={{ borderRadius: 50 }}
 				handleComponent={null}
@@ -35,4 +44,3 @@ const AuthOption = ({ navigation }) => {
 };
 
 export default AuthOption;
-

@@ -1,48 +1,75 @@
-import { Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	Keyboard,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../hooks/Colours";
 
-const InputContainer = ({ text, placeholder, password,onChangeText,value, editable}) => {
-    
+const InputContainer = ({
+	text,
+	placeholder,
+	password,
+	onChangeText,
+	value,
+	editable,
+	submit,
+	multiline
+}) => {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [focus, setFocus] = useState(false);
 	const toggleFocus = () => {
-        setFocus(true);
-    };
+		setFocus(true);
+	};
 	const toggleBlur = () => {
 		setFocus(false);
-    };
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+	};
+	const togglePasswordVisibility = () => {
+		setPasswordVisible(!passwordVisible);
+	};
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.text}>{text}</Text>
-			<View style={[styles.inputCont,focus && styles.focus]} focusable>
+			<View style={[styles.inputCont, focus && styles.focus]} focusable>
 				<TextInput
-                    secureTextEntry={password && !passwordVisible}
+					secureTextEntry={password && !passwordVisible}
 					placeholder={placeholder}
-					placeholderTextColor={colors.lightGrey}
-					onFocus={()=>toggleFocus()}
-					onBlur={()=>toggleBlur()}
+					placeholderTextColor={colors.greyTex}
+					onFocus={() => toggleFocus()}
+					onBlur={() => toggleBlur()}
 					cursorColor={"black"}
 					onChangeText={onChangeText}
 					style={styles.input}
 					value={value}
 					editable={editable}
-					
+					onSubmitEditing={submit}
+					multiline={multiline}
 				/>
 				{password &&
 					(passwordVisible ? (
-                        <TouchableOpacity onPress={()=>togglePasswordVisibility()}>
-						<Ionicons name="eye" size={24} color={colors.greyText}  style={{marginRight:16}}/>
-                        </TouchableOpacity>
+						<TouchableOpacity onPress={() => togglePasswordVisibility()}>
+							<Ionicons
+								name="eye"
+								size={24}
+								color={colors.greyText}
+								style={{ marginRight: 16 }}
+							/>
+						</TouchableOpacity>
 					) : (
-                        <TouchableOpacity onPress={()=>togglePasswordVisibility()}>
-                        <Ionicons name="eye-off" size={24} color={colors.greyText} style={{marginRight:16}}/>
-                        </TouchableOpacity>))}
+						<TouchableOpacity onPress={() => togglePasswordVisibility()}>
+							<Ionicons
+								name="eye-off"
+								size={24}
+								color={colors.greyText}
+								style={{ marginRight: 16 }}
+							/>
+						</TouchableOpacity>
+					))}
 			</View>
 		</View>
 	);
@@ -56,25 +83,28 @@ const styles = StyleSheet.create({
 	},
 	inputCont: {
 		width: "100%",
-		height: 48,
-		backgroundColor: colors.secondaryGrey,
+		minHeight: 48,
 		borderRadius: 8,
 		marginTop: 8,
-        flexDirection:"row",
-        alignItems: "center",
-        justifyContent:"space-between"
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		borderColor: colors.primaryGrey,
+		borderWidth: 0.5,
 	},
 	input: {
-		width: "90%",
 		height: "100%",
 		paddingHorizontal: 16,
 		fontSize: 16,
+		flex: 1,
+		marginVertical:10
 	},
-	text:{
+	text: {
 		fontSize: 16,
 	},
-	focus:{
-		borderColor:colors.primary,
-		borderWidth:1,
-	}
+	focus: {
+		borderColor: colors.primary,
+		borderWidth: 0.5,
+		backgroundColor: colors.secondaryGrey,
+	},
 });

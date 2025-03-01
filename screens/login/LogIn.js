@@ -1,47 +1,120 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+	Image,
+	ScrollView,
+	StatusBar,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
+import React, { useState } from "react";
 import { colors } from "../../hooks/Colours";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Xpense from "../../assets/svg/XpenseLogo2.svg";
 import InputContainer from "../../components/InputContainer";
 import ActiveButton from "../../components/ActiveButton";
 import styles from "./Styles";
+import axios from "axios";
+import API from "../../hooks/API";
+import AuthStore from "../../hooks/ZustandStore";
 
 const LogIn = ({ navigation }) => {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const setToken = AuthStore((state) => state.setToken);
+
+	const NavigateToSignUp = () => {
+		navigation.navigate("SignUp");
+		setToken("blueeeeeeeeeeeee");
+	};
+	const navigateToHome = () => {
+		navigation.navigate("AppStack", {
+			screen: "HomePage",
+			params: {
+				screen: "Home",
+			},
+		});
+	};
+
+	const handleLogin = async () => {
+		if (email === "" || password === "") {
+			setError("All fields are required");
+			return;
+		} else {
+			setLoading(true);
+			const request = {
+				email: email.trim(),
+				password: password.trim(),
+			};
+
+			try {
+				const response = await axios.post(API.Login, request);
+				console.log(response.data);
+				setToken(response.data.token);
+				setLoading(false);
+				navigateToHome();
+			} catch (e) {
+				console.log("error", e.response.status);
+				setError("Failed to log in");
+				setLoading(false);
+			}
+		}
+	};
+
 	return (
 		<SafeAreaView style={styles.container}>
+			<StatusBar barStyle={"light-content"} />
+
 			<View style={styles.TopContainer}>
+				<Image
+					source={require("../../assets/cardImage.png")}
+					style={styles.Image}
+				/>
 				<View style={styles.logo}>
 					<Xpense width={100} height={100} />
 				</View>
-				<Text style={styles.heading}></Text>
-				<Text style={styles.subheading}>Log in to access your account</Text>
 			</View>
 			<View style={styles.bottomContainer}>
 				<Text style={styles.SignUp}>Log in</Text>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					<InputContainer
+						text={"Email"}
+						placeholder={"example@gmail.com"}
+						onChangeText={(text) => setEmail(text)}
+					/>
+					<InputContainer
+						text={"Password"}
+						password
+						placeholder={"********"}
+						onChangeText={(text) => setPassword(text)}
+						submit={() => handleLogin()}
+					/>
 
-				<InputContainer text={"Email"} placeholder={"example@gmail.com"} />
-				<InputContainer text={"Password"} password placeholder={"********"} />
-
-				<View>
-					<Text style={{ marginTop: 10 }}>
-						Don't have an account?
-						<Text
-							style={{ color: colors?.primary, fontWeight: "bold" }}
-							onPress={() => navigation.navigate("SignUp")}
-						>
-							{" "}
-							Sign Up
+					<View>
+						<Text style={{ marginTop: 10 }}>
+							Don't have an account?
+							<Text
+								style={{ color: colors?.primary, fontWeight: "bold" }}
+								onPress={() => NavigateToSignUp()}
+							>
+								{" "}
+								Sign Up
+							</Text>
 						</Text>
-					</Text>
-					<View style={styles.button}>
-						<ActiveButton text={"Log in"} />
+						<View style={styles.button}>
+							<ActiveButton
+								text={"Log in"}
+								onPress={() => handleLogin()}
+								disabled={loading}
+								loading={loading}
+							/>
+						</View>
 					</View>
-				</View>
+				</ScrollView>
 			</View>
 		</SafeAreaView>
 	);
 };
 
 export default LogIn;
-

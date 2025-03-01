@@ -1,11 +1,25 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import React from "react";
 import { colors } from "../hooks/Colours";
 
-const ActiveButton = ({ text, onPress, width }) => {
+const ActiveButton = ({ text, onPress, width, disabled, loading }) => {
 	return (
-		<TouchableOpacity style={[styles.box,{width}]} onPress={onPress}>
-			<Text style={{ color: "white" }}>{text}</Text>
+		<TouchableOpacity
+			style={[styles.box, { width }]}
+			onPress={onPress}
+			disabled={disabled}
+		>
+			{loading ? (
+				<ActivityIndicator color={"white"} />
+			) : (
+				<Text style={styles.text}>{text}</Text>
+			)}
 		</TouchableOpacity>
 	);
 };
@@ -21,6 +35,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		height: 50,
-		minWidth:100
+		minWidth: 100,
 	},
+	text: { color: "white", fontSize: 16, fontWeight: "bold" },
 });
