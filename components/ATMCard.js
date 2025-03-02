@@ -3,8 +3,11 @@ import React from "react";
 import { colors } from "../hooks/Colours";
 import { LinearGradient } from "expo-linear-gradient";
 import Logo from "../assets/svg/XpenseLogo2.svg";
+import AuthStore from "../hooks/ZustandStore";
 
 const ATMCard = () => {
+	const name = AuthStore((state) => state.name);
+
 	return (
 		<LinearGradient
 			colors={[colors.cardPurple, "#1A065F"]}
@@ -24,7 +27,7 @@ const ATMCard = () => {
 			<View style={styles.bottom}>
 				<View>
 					<Text style={styles.text3}>Card holder name</Text>
-					<Text style={styles.text4}>John Doe</Text>
+					<Text style={styles.text4}>{name}</Text>
 				</View>
 				<View>
 					<Text style={styles.text3}>Expiry date</Text>

@@ -14,6 +14,7 @@ import { colors } from "../../hooks/Colours";
 import API from "../../hooks/API";
 import AuthStore from "../../hooks/ZustandStore";
 import styles from "./Styles";
+import addComma from "../../hooks/AmountFormat";
 
 const Budget = ({ navigation }) => {
 	// Sample budget data
@@ -34,7 +35,6 @@ const Budget = ({ navigation }) => {
 		};
 		try {
 			const response = await axios.get(API.getBudgets, header);
-			console.log(response.data);
 			setBudgets(response.data);
 			setLoading(false);
 		} catch (e) {
@@ -73,7 +73,7 @@ const Budget = ({ navigation }) => {
 				<View style={styles.itemHeader}>
 					<Text style={styles.category}>{item?.name}</Text>
 					<Text style={styles.amount}>
-						₦{item?.spent} / ₦{item?.limit}
+						₦{addComma( item?.spent)} / ₦{ addComma (item?.limit)}
 					</Text>
 				</View>
 				<Progress.Bar

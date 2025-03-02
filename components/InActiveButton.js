@@ -2,9 +2,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { colors } from "../hooks/Colours";
 
-const InActiveButton = ({ text, onPress, width }) => {
+const InActiveButton = ({ text, onPress, width, disabled }) => {
 	return (
-		<TouchableOpacity style={[styles.box, { width }]} onPress={onPress}>
+		<TouchableOpacity
+			style={[styles.box, { width }]}
+			onPress={onPress}
+			disabled={disabled}
+		>
 			<Text style={styles.text}>{text}</Text>
 		</TouchableOpacity>
 	);
