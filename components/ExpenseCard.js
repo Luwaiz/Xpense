@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../hooks/Colours";
 import TransactionList from "./TransactionList";
+import addComma from "../hooks/AmountFormat";
 
 const ExpenseCard = ({ item }) => {
 
@@ -19,7 +20,7 @@ const ExpenseCard = ({ item }) => {
 					<Text style={styles.title}>{item?.day}</Text>
 				</View>
 				<View style={styles.amountContainer}>
-					<Text style={styles.amount}>{item?.totalAmount}</Text>
+					<Text style={styles.amount}>{item?.totalAmount && addComma(item?.totalAmount)}</Text>
 					<Text style={styles.date}>{item?.date ? formatDate(item?.date) : "nil"}</Text>
 				</View>
 			</View>

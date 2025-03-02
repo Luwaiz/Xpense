@@ -5,6 +5,7 @@ import Xpense from "../../assets/svg/XpenseLogo.svg";
 import API from "../../hooks/API";
 import AuthStore from "../../hooks/ZustandStore";
 import styles from "./Styles";
+import addComma from "../../hooks/AmountFormat";
 
 const ExpenseDetails = ({ route }) => {
 	const { expenseId } = route.params;
@@ -29,11 +30,9 @@ const ExpenseDetails = ({ route }) => {
 		fetchExpenseDetails();
 	}, [expenseId]);
 
-
-
 	return (
 		<View style={styles.container}>
-		{loading  && <ActivityIndicator size="large" color="white" />}
+			{loading && <ActivityIndicator size="large" color="white" />}
 			<View style={styles.logo}>
 				<Xpense />
 			</View>
@@ -46,7 +45,7 @@ const ExpenseDetails = ({ route }) => {
 					</View>
 					<View style={styles.details}>
 						<Text style={styles.text}>💰 Amount: </Text>
-						<Text style={styles.bold}>₦{expense?.amount}</Text>
+						<Text style={styles.bold}>₦{expense?.amount && addComma(expense?.amount)}</Text>
 					</View>
 					<View style={styles.details}>
 						<Text style={styles.text}>📂 Category:</Text>
@@ -58,7 +57,7 @@ const ExpenseDetails = ({ route }) => {
 							{expense?.description || "No description provided"}
 						</Text>
 					</View>
-					<View style={styles.details}> 
+					<View style={styles.details}>
 						<Text style={styles.text}>📅 Date:</Text>
 						<Text style={styles.bold}>
 							{new Date(expense?.date).toDateString() || "Not available"}

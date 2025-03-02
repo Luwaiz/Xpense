@@ -4,9 +4,10 @@ import { parseISO, formatDate } from "date-fns";
 import { colors } from "../hooks/Colours";
 import CategoryIcons from "./CategoryIcons";
 import { useNavigation } from "@react-navigation/native";
+import addComma from "../hooks/AmountFormat";
 
 const TransactionBox = ({ item }) => {
-	const navigation = useNavigation()
+	const navigation = useNavigation();
 	const convertDate = (isoString) => {
 		const dateObj = parseISO(isoString);
 		// Extract values
@@ -29,9 +30,12 @@ const TransactionBox = ({ item }) => {
 				expenseId,
 			});
 		}
-    };
+	};
 	return (
-		<TouchableOpacity style={styles.container} onPress={()=>CheckDetails(item?._id)}>
+		<TouchableOpacity
+			style={styles.container}
+			onPress={() => CheckDetails(item?._id)}
+		>
 			<Text>
 				<CategoryIcons category={item?.category} />
 			</Text>
@@ -42,7 +46,7 @@ const TransactionBox = ({ item }) => {
 				<Text style={styles.date}>{item && convertDate(item?.date)?.Date}</Text>
 			</View>
 			<View style={styles.rightContainer}>
-				<Text style={styles.amount}>- {item?.amount}</Text>
+				<Text style={styles.amount}>- {addComma(item?.amount)}</Text>
 				<Text style={styles.date}>{item && convertDate(item?.date)?.Time}</Text>
 			</View>
 		</TouchableOpacity>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		marginLeft: 10,
 	},
-	category: { color: colors.greyText, fontSize: 12 , marginTop: 7,},
+	category: { color: colors.greyText, fontSize: 12, marginTop: 7 },
 	date: { color: colors.greyText, fontSize: 12 },
 	amount: { color: "red" },
 	rightContainer: {

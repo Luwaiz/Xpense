@@ -16,13 +16,14 @@ import styles from "./Styles";
 import axios from "axios";
 import API from "../../hooks/API";
 import AuthStore from "../../hooks/ZustandStore";
+import UserProfileHook from "../../hooks/UserProfileHook";
 
 const LogIn = ({ navigation }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const setToken = AuthStore((state) => state.setToken);
+	const setToken  = AuthStore((state) => state.setToken);
 
 	const NavigateToSignUp = () => {
 		navigation.navigate("SignUp");
@@ -52,10 +53,11 @@ const LogIn = ({ navigation }) => {
 				const response = await axios.post(API.Login, request);
 				console.log(response.data);
 				setToken(response.data.token);
+				await UserProfileHook();
 				setLoading(false);
 				navigateToHome();
 			} catch (e) {
-				console.log("error", e.response.status);
+				console.log("error", e);
 				setError("Failed to log in");
 				setLoading(false);
 			}
