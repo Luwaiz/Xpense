@@ -17,6 +17,7 @@ import ActiveButton from "../../components/ActiveButton";
 import styles from "./Styles";
 import axios from "axios";
 import API from "../../hooks/API";
+import AuthStore from "../../hooks/ZustandStore";
 
 const SignUp = ({ navigation }) => {
 	const [loading, setLoading] = useState(false);
@@ -26,6 +27,10 @@ const SignUp = ({ navigation }) => {
 	const [name, setName] = useState("");
 	const [error, setError] = useState("");
 	const [keyboardHeight, setKeyboardHeight] = useState(null);
+	const setMail = AuthStore((state) => state.setEmail);
+	const setNameStore = AuthStore((state) => state.setName);
+	const setPasswordStore = AuthStore((state) => state.setPassword);
+
 	// function to navigate to login page
 	const NavigateToLogin = () => {
 		navigation.navigate("Login");
@@ -88,22 +93,30 @@ const SignUp = ({ navigation }) => {
 		else {
 			setError("");
 			setLoading(true);
-
-			const request = { 
-				name: name.trim(),
+			const request = {
 				email: email.trim(),
-				password: password.trim(),
 			};
 			try {
-				const response = await axios.post(API.Register, request);
+				setMail(email.trim());
+				setNameStore(name.trim());
+				setPasswordStore(password.trim());
+				const response = await axios.post(API.requestOtp, request);
 				console.log(response.data);
-				setLoading(false);
 				NavigateToVerify();
+				setLoading(false);
 			} catch (e) {
-				setError(e.response.data.message);
-				console.log(e.response.data);
+				console.log("Error", e);
 				setLoading(false);
 			}
+
+			// try {
+			// 	setLoading(false);
+			// 	NavigateToVerify();
+			// } catch (e) {
+			// 	setError(e.response.data.message);
+			// 	console.log(e.response.data);
+			// 	setLoading(false);
+			// }
 		}
 	};
 
@@ -112,7 +125,7 @@ const SignUp = ({ navigation }) => {
 			<SafeAreaView style={styles.container}>
 				<View style={styles.TopContainer}>
 					<Image
-						source={require("../../assets/cardImage.png")}
+						source={require("../../assets/images/cardImage.png")}
 						style={styles.Image}
 					/>
 					<View

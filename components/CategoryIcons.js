@@ -17,7 +17,7 @@ const CategoryIcons = ({ category }) => {
 			</View> // Removed stray semicolon
 		);
 	}
-	if (category === "healthInsurance") {
+	if (category === "Health Insurance") {
 		return (
 			<View style={[styles.container, { backgroundColor: "#FF8F00" }]}>
 				<MaterialCommunityIcons name="medical-bag" size={24} color="white" />

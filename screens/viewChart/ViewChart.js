@@ -7,6 +7,7 @@ import axios from "axios";
 import API from "../../hooks/API";
 import YearBar from "../../components/YearBar";
 import ExpenseCard from "../../components/ExpenseCard";
+import TransactionBox from "../../components/TransactionBox";
 
 const ViewChart = () => {
 	const [loading, setLoading] = useState(false);

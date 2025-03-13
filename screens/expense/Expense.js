@@ -63,12 +63,11 @@ const Expense = () => {
 			alert("Please enter all fields");
 			setLoading(false);
 		} else {
-
 			const request = {
 				name: name.trim(),
 				category: category.trim(),
 				description: description.trim(),
-				budgetId:selectedBudget,
+				budgetId: selectedBudget,
 				amount: amount,
 				date: Date.now(),
 			};
@@ -100,7 +99,7 @@ const Expense = () => {
 		};
 		try {
 			const response = await axios.get(API.getBudgets, header);
- 			const formattedBudgets = response?.data?.map((budget) => ({
+			const formattedBudgets = response?.data?.map((budget) => ({
 				label: budget.name, // Display name in dropdown
 				value: budget._id, // Store budget ID
 			}));
@@ -113,6 +112,7 @@ const Expense = () => {
 			}
 		}
 	};
+	
 	useEffect(() => {
 		getBudgets();
 	}, []);
@@ -189,7 +189,13 @@ const Expense = () => {
 					/>
 				</View>
 			</View>
-			{modal && <AddSuccessModal modal={modal} setModal={setModal} />}
+			{modal && (
+				<AddSuccessModal
+					modal={modal}
+					setModal={setModal}
+					text={"Expense Recorded Successfully!"}
+				/>
+			)}
 		</View>
 	);
 };

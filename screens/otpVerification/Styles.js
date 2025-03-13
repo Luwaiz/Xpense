@@ -1,39 +1,59 @@
-import { StyleSheet } from 'react-native'
-import { colors } from '../../hooks/Colours';
+import { StyleSheet } from "react-native";
+import { colors } from "../../hooks/Colours";
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "white",
-		paddingHorizontal:16
+		backgroundColor: colors?.primary,
+	},
+	TopContainer: {
+		flex: 0.3,
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	heading: {
-		fontSize: 36,
-		fontWeight: "medium",
+		fontSize: 32,
+		fontWeight: "bold",
+		color: "white",
+		marginTop: 130,
+	},
+	subheading: {
+		fontSize: 14,
+		color: "white",
+		marginTop: 10,
 	},
 	bottomContainer: {
-		flex: 0.6,
+		flex: 0.7,
 		backgroundColor: "white",
-		marginTop:"auto"
+		padding: 16,
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
 	},
-	otpInput:{
-		height:100,
-		marginVertical:40
+	heading: {
+		fontSize: 24,
+		fontWeight: "500",
+		color: "black",
+		marginVertical: 20,
 	},
-	button: {
-		marginTop: "auto",
-		marginBottom: 20,
+	Text: {
+		fontSize: 14,
+		color: "black",
+		marginBottom: 10,
 	},
-	itemText:{
-		fontSize: 16,
-        marginTop: 10,
+	otpInput: {
+		alignSelf: "center",
+		marginBottom: "auto",
+		marginTop: 30,
 	},
-	resendOtp:{
-		fontSize:16,
-        color:colors?.primary,
-        marginTop:10,
-		textDecorationLine:"underline"
+	button:{
+		marginTop:20
+	},
+	bottomText:{
+		flexDirection:"row",
+		justifyContent:"center",
+        alignItems:"center",
+		gap:20
 	}
-
 });
-export default styles
+
+export default styles;

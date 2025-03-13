@@ -27,7 +27,6 @@ const LogIn = ({ navigation }) => {
 
 	const NavigateToSignUp = () => {
 		navigation.navigate("SignUp");
-		setToken("blueeeeeeeeeeeee");
 	};
 	const navigateToHome = () => {
 		navigation.navigate("AppStack", {
@@ -55,9 +54,8 @@ const LogIn = ({ navigation }) => {
 				setToken(response.data.token);
 				await UserProfileHook();
 				setLoading(false);
-				navigateToHome();
 			} catch (e) {
-				console.log("error", e);
+				console.log("error", e.response.data);
 				setError("Failed to log in");
 				setLoading(false);
 			}
@@ -70,7 +68,7 @@ const LogIn = ({ navigation }) => {
 
 			<View style={styles.TopContainer}>
 				<Image
-					source={require("../../assets/cardImage.png")}
+					source={require("../../assets/images/cardImage.png")}
 					style={styles.Image}
 				/>
 				<View style={styles.logo}>

@@ -12,8 +12,10 @@ import { useNavigation } from "@react-navigation/native";
 import Check from "../assets/svg/success.svg";
 const { width, height } = Dimensions.get("screen");
 
-const AddSuccessModal = ({ modal, setModal }) => {
+const AddSuccessModal = ({ modal, setModal ,text, NextPage}) => {
 	const navigation = useNavigation();
+
+	
 	const ToHome = () => {
 		setModal(false);
 		navigation.navigate("AppStack", {
@@ -38,7 +40,7 @@ const AddSuccessModal = ({ modal, setModal }) => {
 								<Check width={50} height={50} />
 							</View>
 							<Text style={styles.text}>
-								Transaction has been successfully added!
+								{text}
 							</Text>
 						</View>
 					</View>

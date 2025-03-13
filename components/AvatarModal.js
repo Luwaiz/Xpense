@@ -6,7 +6,6 @@ import {
 	ScrollView,
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	View,
 } from "react-native";
 import React, { useState } from "react";
@@ -21,37 +20,37 @@ import API from "../hooks/API";
 import ActiveButton from "./ActiveButton";
 import InActiveButton from "./InActiveButton";
 
-const AvatarModal = ({ modal, setModal, setSelectedAvatar,successToast }) => {
+const AvatarModal = ({ modal, setModal, setSelectedAvatar, successToast }) => {
 	const [selected, setSelected] = useState(null);
-    const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 
 	const token = AuthStore((state) => state.token);
 
 	const handleSelect = (avatar) => {
-        console.log(avatar)
+		console.log(avatar);
 		setSelected(avatar);
 	};
-    
+
 	const saveAvatar = async (avatar) => {
-        setLoading(true)
+		setLoading(true);
 		const header = {
-            headers: {
-                Authorization: `Bearer ${token}`,
+			headers: {
+				Authorization: `Bearer ${token}`,
 			},
 		};
 		try {
-            const response = await axios.post(
-                API.saveAvatar,
+			const response = await axios.post(
+				API.saveAvatar,
 				{ avatarUrl: avatar },
 				header
 			);
-            setSelectedAvatar(avatar);
-            setLoading(false)
-            setModal(false);
-            successToast();
+			setSelectedAvatar(avatar);
+			setLoading(false);
+			setModal(false);
+			successToast();
 		} catch (err) {
 			console.error("Failed to save avatar: ", err.response.data);
-            setLoading(false)
+			setLoading(false);
 		}
 	};
 	return (
@@ -102,7 +101,7 @@ const AvatarModal = ({ modal, setModal, setSelectedAvatar,successToast }) => {
 						<ActiveButton
 							text={"Save"}
 							onPress={() => saveAvatar(selected.url)}
-                            loading={loading}
+							loading={loading}
 						/>
 					) : (
 						<InActiveButton text={"Save"} disabled={true} />

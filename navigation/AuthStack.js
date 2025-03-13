@@ -27,6 +27,7 @@ const AuthStack = () => {
 			/>
 			<Stack.Screen name="PIN" component={PIN} />
 			<Stack.Screen name="SuccessPin" component={SuccessPin} />
+			{/* <Stack.Screen name="Notify" component={Notify} /> */}
 		</Stack.Navigator>
 	);
 };

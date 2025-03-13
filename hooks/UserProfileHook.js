@@ -11,9 +11,7 @@ const UserProfileHook = async () => {
         const setName = AuthStore.getState().setName;
         const setEmail = AuthStore.getState().setEmail;
         const token = AuthStore.getState().token;
-    
-        console.log("Token:", token);
-    
+        
         const header = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -21,9 +19,7 @@ const UserProfileHook = async () => {
         };
     
         const response = await axios.get(API.getProfile, header);
-        if (response.status === 200) {
-          console.log("Profile fetched successfully", response.data);
-    
+        if (response.status === 200) {    
           // Update Zustand state
           setName(response.data.user.name);
           setEmail(response.data.user.email);

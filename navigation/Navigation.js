@@ -5,11 +5,39 @@ import Onboarding from "../screens/onboarding/Onboarding";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthStack from "./AuthStack";
 import AppStack from "./AppStack";
+import AuthStore from "../hooks/ZustandStore";
+// import * as Notifications from "expo-notifications";
+
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
-	// checking the state of the application if launched for the first time or not
+	const token = AuthStore((state) => state.token);
 	const [firstLaunch, setFirstLaunch] = useState(true);
+
+
+	// const registerForPushNotificationsAsync = async () => {
+	// 	let token;
+
+	// 	const { status: existingStatus } =
+	// 		await Notifications.getPermissionsAsync();
+	// 	let finalStatus = existingStatus;
+
+	// 	if (existingStatus !== "granted") {
+	// 		const { status } = await Notifications.requestPermissionsAsync();
+	// 		finalStatus = status;
+	// 	}
+	// 	if (finalStatus !== "granted") {
+	// 		alert("Failed to get push token for push notification!");
+	// 		return;
+	// 	}
+	// 	token = (await Notifications.getExpoPushTokenAsync()).data;
+	// 	console.log(token);
+
+	// 	return token;
+	// };
+
+
+	// checking the state of the application if launched for the first time or not
 
 	// const OnBoardState = async () => {
 	// 	try {
@@ -34,11 +62,17 @@ export default function Navigation() {
 		<NavigationContainer>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				{/* conditionally rendering the Onboarding screen only on first launch */}
-				{firstLaunch && <Stack.Screen component={Onboarding} name="OnBoard" />}
 
 				{/* separation of Authentication screens and Application screens */}
-				<Stack.Screen component={AuthStack} name="AuthStack" />
-				<Stack.Screen component={AppStack} name="AppStack" />
+				{token === "" ? (
+					<>
+						<Stack.Screen component={Onboarding} name="OnBoard" />
+
+						<Stack.Screen component={AuthStack} name="AuthStack" />
+					</>
+				) : (
+					<Stack.Screen component={AppStack} name="AppStack" />
+				)}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
