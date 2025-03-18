@@ -13,15 +13,21 @@ const AuthOption = ({ navigation }) => {
 		navigation.navigate("Login");
 	};
 
+
 	// function to navigate to signup page
 	const ToSignup = () => {
 		navigation.navigate("SignUp");
 	};
+
+	const Notify = ()=>{
+		navigation.navigate("Notify")
+	}
 	return (
+		
 		<View style={styles.container}>
 			<View style={styles.topContainer}>
 			<Image
-					source={require("../../assets/cardImage.png")}
+					source={require("../../assets/images/cardImage.png")}
 					style={styles.Image}
 				/>
 				<Xpense />
@@ -37,6 +43,7 @@ const AuthOption = ({ navigation }) => {
 					<Text style={styles.welcome}>Welcome!</Text>
 					<ActiveButton text={"Sign up"} onPress={ToSignup} width={200} />
 					<InActiveButton text={"Log in"} onPress={ToLogin} width={200} />
+					{/* <InActiveButton text={"Notify"} onPress={Notify} width={200} /> */}
 				</BottomSheetView>
 			</BottomSheet>
 		</View>

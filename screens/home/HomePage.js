@@ -6,7 +6,7 @@ import {
 	StatusBar,
 	TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Styles";
 import ATMCard from "../../components/ATMCard";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -16,11 +16,16 @@ import axios from "axios";
 import API from "../../hooks/API";
 import AuthStore from "../../hooks/ZustandStore";
 import { colors } from "../../hooks/Colours";
+import TransactionBox from "../../components/TransactionBox";
+import NoExpense from "../../assets/svg/NoExpense.svg";
+import CreateBudget from "../../components/CreateBudget";
+import { useFocusEffect } from "@react-navigation/native";
 
 const HomePage = ({ navigation }) => {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	const [modal, setModal] = useState(false);
 	const token = AuthStore((state) => state.token);
 
 	const getRecent = async () => {
@@ -40,9 +45,15 @@ const HomePage = ({ navigation }) => {
 		}
 	};
 
-	useEffect(() => {
-		getRecent();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			getRecent(); // Fetch recent expenses when the screen is focused
+		}, [])
+	);
+
+	const createBudget = () => {
+		setModal(true);
+	};
 	const Expense = () => {
 		navigation.navigate("Expense");
 	};
@@ -65,7 +76,7 @@ const HomePage = ({ navigation }) => {
 					<Text style={styles.iconText}>Add Expense</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress={() => Income()}
+					onPress={() => createBudget()}
 					style={styles.optionContainer}
 				>
 					<View style={[styles.icon, { backgroundColor: "green" }]}>
@@ -74,8 +85,22 @@ const HomePage = ({ navigation }) => {
 					<Text style={styles.iconText}>Create Budget</Text>
 				</TouchableOpacity>
 			</View>
-			<Text style={styles.recentText}>Recent Transactions</Text>
-			<TransactionList  data={data || []} fetchData={getRecent} refreshing={refreshing}/>
+			<Text style={styles.recentText}>Recent Expenses</Text>
+			<View style={styles.bottom}>
+				{data.length > 0 ? (
+					data?.map((expenses, index) => (
+						<TransactionBox key={index?.toString()} item={expenses} />
+					))
+				) : (
+					<View style={styles.noExpenseCont}>
+						<Text style={styles.noExpenseText}>No Expenses Incurred.</Text>
+						<View style={styles.overlay}>
+							<NoExpense width={200} height={200} />
+						</View>
+					</View>
+				)}
+			</View>
+			{modal && <CreateBudget modal={modal} setModal={setModal} />}
 		</View>
 	);
 };

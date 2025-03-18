@@ -13,11 +13,14 @@ import AuthStore from "../../hooks/ZustandStore";
 import { colors } from "../../hooks/Colours";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import styles from "./Styles";
+import NoExpense from "../../assets/svg/NoExpense.svg";
+import DownloadExpense from "../../components/Download";
 
 const AllTransactions = ({ viewChart }) => {
 	const [loading, setLoading] = useState("");
 	const [refreshing, setRefreshing] = useState(false);
-	const [transactions, setTransactions] = useState([]);
+	const [expenses, setExpenses] = useState([]);
+	const [Modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const token = AuthStore((state) => state.token);
 	const date = new Date();
@@ -33,12 +36,16 @@ const AllTransactions = ({ viewChart }) => {
 		};
 		try {
 			const response = await axios.get(API.getExpense, header);
-			setTransactions(response.data);
+			setExpenses(response.data);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
 			setLoading(false);
 		}
+	};
+
+	const removeExpenseFromList = (id) => {
+		setExpenses((prevExpenses) => prevExpenses.filter((exp) => exp._id !== id));
 	};
 
 	useEffect(() => {
@@ -64,7 +71,7 @@ const AllTransactions = ({ viewChart }) => {
 				<TouchableOpacity style={styles.button} onPress={() => viewChart()}>
 					<Text style={styles.buttonText}>View Chart</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.button}>
+				<TouchableOpacity style={styles.button} onPress={() => setModal(true)}>
 					<Text style={styles.buttonText}>Download</Text>
 				</TouchableOpacity>
 			</View>
@@ -75,11 +82,20 @@ const AllTransactions = ({ viewChart }) => {
 					style={styles.ActivityIndicator}
 				/>
 			)}
-			<TransactionList
-				data={transactions}
-				fetchData={getExpense}
-				refreshing={refreshing}
-			/>
+			{expenses.length > 0 ? (
+				<TransactionList
+					data={expenses}
+					fetchData={getExpense}
+					refreshing={refreshing}
+					onDeleteExpense={removeExpenseFromList}
+				/>
+			) : (
+				<View style={styles.noExpenseCont}>
+					<Text style={styles.noExpenseText}>No Expenses Incurred.</Text>
+					<NoExpense width={300} height={300} />
+				</View>
+			)}
+			{Modal && <DownloadExpense modal={Modal} setModal={setModal} />}
 		</View>
 	);
 };

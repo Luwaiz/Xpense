@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "189626274072",
+    "project_id": "xpense-bafa7",
+    "storage_bucket": "xpense-bafa7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189626274072:android:2cf078c11e0eec800b8e6d",
+        "android_client_info": {
+          "package_name": "com.eluwaiz.Xpense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH62GHJrcKLVa91nOBM_Ii_X2XbaNs3zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

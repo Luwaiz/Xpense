@@ -7,6 +7,7 @@ import Transactions from "../screens/transactions/Transactions";
 import Profile from "../screens/profile/Profile";
 import TabHeader from "../components/TabHeader";
 import Foundation from "@expo/vector-icons/Foundation";
+import Fontisto from '@expo/vector-icons/Fontisto';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -83,9 +84,8 @@ const BottomTab = () => {
 				options={{
 					tabBarIcon: ({ focused }) => {
 						return (
-							<FontAwesome
-								name="pie-chart"
-								size={24}
+							<Fontisto name="arrow-swap" 
+								size={25}
 								color={focused ? colors.primary : colors.primaryGrey}
 							/>
 						);

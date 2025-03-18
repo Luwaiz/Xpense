@@ -23,11 +23,10 @@ const LogIn = ({ navigation }) => {
 	const [error, setError] = useState(null);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const setToken  = AuthStore((state) => state.setToken);
+	const setToken = AuthStore((state) => state.setToken);
 
 	const NavigateToSignUp = () => {
 		navigation.navigate("SignUp");
-		setToken("blueeeeeeeeeeeee");
 	};
 	const navigateToHome = () => {
 		navigation.navigate("AppStack", {
@@ -55,10 +54,9 @@ const LogIn = ({ navigation }) => {
 				setToken(response.data.token);
 				await UserProfileHook();
 				setLoading(false);
-				navigateToHome();
 			} catch (e) {
-				console.log("error", e);
-				setError("Failed to log in");
+				console.log("error", e.response.data.error);
+				setError(e.response.data.error);
 				setLoading(false);
 			}
 		}
@@ -70,7 +68,7 @@ const LogIn = ({ navigation }) => {
 
 			<View style={styles.TopContainer}>
 				<Image
-					source={require("../../assets/cardImage.png")}
+					source={require("../../assets/images/cardImage.png")}
 					style={styles.Image}
 				/>
 				<View style={styles.logo}>
@@ -92,7 +90,7 @@ const LogIn = ({ navigation }) => {
 						onChangeText={(text) => setPassword(text)}
 						submit={() => handleLogin()}
 					/>
-
+					{error && <Text style={styles.error}>{error}</Text>}
 					<View>
 						<Text style={{ marginTop: 10 }}>
 							Don't have an account?

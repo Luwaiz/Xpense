@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		alignItems: "center",
 	},
+	ContentContainer: {
+		paddingBottom: 50,
+	},
 	scroll: {
 		flex: 1,
 		width: "100%",
@@ -16,34 +19,27 @@ const styles = StyleSheet.create({
 		justifyContent: "space-around",
 	},
 	options: {
-		// flexDirection: "row",
-		// marginTop: 20,
-		// padding: 10,
-		// borderRadius: 5,
-		// height: 100,
-		// marginBottom: 30,
-		// justifyContent: "space-around",
-		// alignItems: "center",
 		width: "100%",
-		padding: 16,
+		paddingHorizontal: 16,
+		paddingVertical: 8,
 	},
 	recentText: {
 		fontSize: 18,
 		fontWeight: "bold",
 		alignSelf: "flex-start",
 		paddingLeft: 16,
-		paddingBottom: 8,
+		marginBottom: 2,
 	},
 	optionContainer: {
 		width: "100%",
 		flexDirection: "row",
 		borderWidth: 1,
 		borderColor: colors.secondaryGrey,
-		padding:10,
-		marginBottom:10,
-		borderRadius:30,
+		padding: 10,
+		marginBottom: 10,
+		borderRadius: 30,
 		alignItems: "center",
-		gap:10,
+		gap: 10,
 	},
 	icon: {
 		borderWidth: 1,
@@ -54,10 +50,25 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	iconText:{
+	iconText: {
 		fontSize: 16,
-        color: "black",
+		color: "black",
 		fontWeight: "bold",
-	}
+	},
+	noExpenseCont: {
+		alignItems: "center",
+		justifyContent: "center",
+		marginBottom: "auto",
+		marginTop: "auto",
+	},
+	noExpenseText: {
+		marginTop: 20,
+		textAlign: "center",
+		fontWeight: "500",
+		fontSize: 14,
+	},
+	bottom: {
+		width: "100%",
+	},
 });
 export default styles;

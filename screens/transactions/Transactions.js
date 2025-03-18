@@ -14,7 +14,6 @@ import API from "../../hooks/API";
 import AllTransactions from "../allTransactions/AllTransactions";
 
 const Transactions = ({ navigation }) => {
-	const [selected, setSelected] = useState("Transactions");
 	const [loading, setLoading] = useState("");
 	const [transactions, setTransactions] = useState([]);
 	const [option, setOption] = useState("Weekly");

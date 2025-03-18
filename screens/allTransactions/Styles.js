@@ -45,6 +45,18 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 12,
 	},
+	noExpenseCont: {
+		alignItems: "center",
+		justifyContent:"center",
+		marginBottom:"auto",
+		marginTop:"auto",
+	},
+	noExpenseText: {
+		marginTop: 20,
+		textAlign: "center",
+		fontWeight: "500",
+		fontSize: 16,
+	},
 });
 
 export default styles;

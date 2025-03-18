@@ -51,6 +51,11 @@ const styles = StyleSheet.create({
 		top: -80,
 		transform: [{ rotate: "-40deg" }],
 	},
+	error:{
+		color: "red",
+        fontSize: 14,
+        
+	}
 });
 
 export default styles;

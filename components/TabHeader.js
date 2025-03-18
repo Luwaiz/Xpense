@@ -8,9 +8,8 @@ import AuthStore from "../hooks/ZustandStore";
 
 const TabHeader = ({ route }) => {
 	const name = AuthStore((state) => state.name);
-	const email = AuthStore((state) => state.email)
+	const email = AuthStore((state) => state.email);
 	const avatar = AuthStore((state) => state.avatar);
-
 
 	const navigation = useNavigation();
 	const navigateBack = () => {
@@ -21,8 +20,14 @@ const TabHeader = ({ route }) => {
 			{route.name === "Home" ? (
 				<View style={styles.homeContainer}>
 					<View style={styles.circle}>
-						<Image source={{ uri: avatar }} style={styles.avatar} />
-                
+						<Image
+							source={
+								avatar !== ""
+									? { uri: avatar }
+									: require("../assets/images/profile.png")
+							}
+							style={styles.avatar}
+						/>
 					</View>
 					<View>
 						<Text style={styles.Name}>{name}</Text>
@@ -67,8 +72,6 @@ const styles = StyleSheet.create({
 		width: 50,
 		borderRadius: 25,
 		backgroundColor: "#fff",
-		borderWidth: 1.5,
-		borderColor: colors.primary,
 		overflow: "hidden",
 	},
 	homeContainer: {

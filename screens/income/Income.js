@@ -21,42 +21,7 @@ const Income = () => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [startDate, setStartDate] = useState(null);
-	const [openStartDate, setOpenStartDate] = useState(false);
-	const [endDate, setEndDate] = useState(null);
-	const [openEndDate, setOpenEndDate] = useState(false);
 
-	const token = AuthStore((state) => state.token);
-
-	const createBudget = async () => {
-		setLoading(true);
-		if (amount === 0) {
-			alert("Please enter a budget limit");
-			setLoading(false);
-		} else {
-			const request = {
-				name,
-				limit: amount.trim(),
-				startDate,
-				endDate,
-			};
-			const header = {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			};
-			try {
-				const response = await axios.post(API.createBudget, request, header);
-				console.log(response.data);
-				setLoading(false);
-				setModal(true);
-			} catch (error) {
-				console.error(error.response.data);
-				alert("Failed to add expense");
-				setLoading(false);
-			}
-		}
-	};
 
 	return (
 		<View style={styles.container}>
@@ -81,46 +46,6 @@ const Income = () => {
 					onChangeText={(text) => setName(text)}
 				/>
 
-				{/* Start Date Picker */}
-				<TouchableOpacity
-					onPress={() => setOpenStartDate(true)}
-					style={styles.datePicker}
-				>
-					<Text style={styles.dateText}>
-						{startDate ? startDate.toDateString() : "Choose a start date"}
-					</Text>
-				</TouchableOpacity>
-				<DatePicker
-					modal
-					open={openStartDate}
-					date={startDate || new Date()} // Default to today's date
-					mode="date"
-					onConfirm={(date) => {
-						setOpenStartDate(false);
-						setStartDate(date);
-					}}
-					onCancel={() => setOpenStartDate(false)}
-				/>
-				<TouchableOpacity
-					onPress={() => setOpenEndDate(true)}
-					style={styles.datePicker}
-				>
-					<Text style={styles.dateText}>
-						{endDate ? endDate.toDateString() : "Choose an end date"}
-					</Text>
-				</TouchableOpacity>
-				<DatePicker
-					modal
-					open={openEndDate}
-					date={endDate || new Date()} // Default to today's date
-					mode="date"
-					onConfirm={(date) => {
-						setOpenEndDate(false);
-						setEndDate(date);
-					}}
-					onCancel={() => setOpenEndDate(false)}
-				/>
-
 				<View style={styles.button}>
 					<ActiveButton
 						text={"Continue"}
@@ -130,23 +55,57 @@ const Income = () => {
 				</View>
 			</View>
 
-			{modal && <AddSuccessModal modal={modal} setModal={setModal} />}
+			{modal && (
+				<AddSuccessModal
+					modal={modal}
+					setModal={setModal}
+					text={"Budget Created Successfully!"}
+				/>
+			)}
 		</View>
 	);
 };
 
-// const styles = StyleSheet.create({
-// 	datePicker: {
-// 		backgroundColor: "#fff",
-// 		padding: 10,
-// 		borderRadius: 5,
-// 		marginTop: 10,
-// 		alignItems: "center",
-// 	},
-// 	dateText: {
-// 		color: "#000",
-// 		fontSize: 16,
-// 	},
-// });
+{
+	/* Start Date Picker
+<TouchableOpacity
+	onPress={() => setOpenStartDate(true)}
+	style={styles.datePicker}
+>
+	<Text style={styles.dateText}>
+		{startDate ? startDate.toDateString() : "Choose a start date"}
+	</Text>
+</TouchableOpacity>
+<DatePicker
+	modal
+	open={openStartDate}
+	date={startDate || new Date()} // Default to today's date
+	mode="date"
+	onConfirm={(date) => {
+		setOpenStartDate(false);
+		setStartDate(date);
+	}}
+	onCancel={() => setOpenStartDate(false)}
+/>
+<TouchableOpacity
+	onPress={() => setOpenEndDate(true)}
+	style={styles.datePicker}
+>
+	<Text style={styles.dateText}>
+		{endDate ? endDate.toDateString() : "Choose an end date"}
+	</Text>
+</TouchableOpacity>
+<DatePicker
+	modal
+	open={openEndDate}
+	date={endDate || new Date()} // Default to today's date
+	mode="date"
+	onConfirm={(date) => {
+		setOpenEndDate(false);
+		setEndDate(date);
+	}}
+	onCancel={() => setOpenEndDate(false)}
+/> */
+}
 
 export default Income;
