@@ -21,6 +21,8 @@ export default {
 	monthlyExpenses: `${url}/expense/monthlyExpenses`,
     deleteExpense: `${url}/expense/deleteExpenses`,
 	updateExpense: `${url}/expense/updateExpenses`,
+	downloadPDF: `${url}/expense`,
+	downloadExcel: `${url}/expense`,
 
 	//Budget API's
 	createBudget: `${url}/budget/createBudget`,

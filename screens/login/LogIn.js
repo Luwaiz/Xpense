@@ -23,7 +23,7 @@ const LogIn = ({ navigation }) => {
 	const [error, setError] = useState(null);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const setToken  = AuthStore((state) => state.setToken);
+	const setToken = AuthStore((state) => state.setToken);
 
 	const NavigateToSignUp = () => {
 		navigation.navigate("SignUp");
@@ -55,8 +55,8 @@ const LogIn = ({ navigation }) => {
 				await UserProfileHook();
 				setLoading(false);
 			} catch (e) {
-				console.log("error", e.response.data);
-				setError("Failed to log in");
+				console.log("error", e.response.data.error);
+				setError(e.response.data.error);
 				setLoading(false);
 			}
 		}
@@ -90,7 +90,7 @@ const LogIn = ({ navigation }) => {
 						onChangeText={(text) => setPassword(text)}
 						submit={() => handleLogin()}
 					/>
-
+					{error && <Text style={styles.error}>{error}</Text>}
 					<View>
 						<Text style={{ marginTop: 10 }}>
 							Don't have an account?

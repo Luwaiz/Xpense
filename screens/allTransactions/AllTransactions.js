@@ -14,11 +14,13 @@ import { colors } from "../../hooks/Colours";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import styles from "./Styles";
 import NoExpense from "../../assets/svg/NoExpense.svg";
+import DownloadExpense from "../../components/Download";
 
 const AllTransactions = ({ viewChart }) => {
 	const [loading, setLoading] = useState("");
 	const [refreshing, setRefreshing] = useState(false);
 	const [expenses, setExpenses] = useState([]);
+	const [Modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const token = AuthStore((state) => state.token);
 	const date = new Date();
@@ -69,7 +71,7 @@ const AllTransactions = ({ viewChart }) => {
 				<TouchableOpacity style={styles.button} onPress={() => viewChart()}>
 					<Text style={styles.buttonText}>View Chart</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.button}>
+				<TouchableOpacity style={styles.button} onPress={() => setModal(true)}>
 					<Text style={styles.buttonText}>Download</Text>
 				</TouchableOpacity>
 			</View>
@@ -93,6 +95,7 @@ const AllTransactions = ({ viewChart }) => {
 					<NoExpense width={300} height={300} />
 				</View>
 			)}
+			{Modal && <DownloadExpense modal={Modal} setModal={setModal} />}
 		</View>
 	);
 };

@@ -90,7 +90,6 @@ const Expense = () => {
 	};
 
 	const getBudgets = async () => {
-		setLoading(true);
 
 		const header = {
 			headers: {
@@ -104,7 +103,6 @@ const Expense = () => {
 				value: budget._id, // Store budget ID
 			}));
 			setBudget(formattedBudgets);
-			setLoading(false);
 		} catch (e) {
 			console.log(e.response.data.message);
 			if (e.response.data.message === "No budgets found.") {
