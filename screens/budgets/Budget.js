@@ -22,6 +22,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import CreateBudget from "../../components/CreateBudget";
 import EditBudget from "../../components/EditBudget";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Notifications from "expo-notifications";
+
 
 const Budget = ({ navigation }) => {
 	// Sample budget data
@@ -62,6 +64,36 @@ const Budget = ({ navigation }) => {
 			setLoading(false);
 		}
 	};
+
+	// Function to schedule a local notification
+	const schedulePushNotification = async (title, body) => {
+		await Notifications.scheduleNotificationAsync({
+			content: {
+				title: title,
+				body: body,
+				data: { type: "budget_exceeded" }, // Optional: Add custom data
+			},
+			trigger: { seconds: 1 }, // Show the notification after 1 second
+		});
+	};
+
+	// Function to check if any budget is exceeded
+	const checkBudgets = (budgets) => {
+		budgets.forEach((budget) => {
+			if (budget.spent > budget.limit) {
+				schedulePushNotification(
+					"Budget Exceeded",
+					`You have exceeded your budget for ${budget.name}!`
+				);
+			}
+		});
+	};
+
+	useEffect(() => {
+		if (budgets.length > 0) {
+		  checkBudgets(budgets);
+		}
+	  }, [budgets]);
 
 	const onRefresh = async () => {
 		setRefresh(true);

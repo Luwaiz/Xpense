@@ -34,3 +34,5 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+.xpense-bafa7-firebase-adminsdk-fbsvc-b3350a4e6d

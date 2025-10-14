@@ -1,34 +1,38 @@
 {
-  "expo": {
-    "name": "Xpense",
-    "slug": "Xpense",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.eluwaiz.Xpense"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "00f3ce35-5ba9-4bb7-aa2a-21b3b39d4058"
-      }
-    }
-  }
+	"expo": {
+		"name": "Xpense",
+		"slug": "Xpense",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "light",
+		"newArchEnabled": true,
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#000000"
+		},
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.eluwaiz.Xpense",
+			"googleServicesFile": "./google-services (6).json"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"notification": {
+			"icon": "./assets/images/badge.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "00f3ce35-5ba9-4bb7-aa2a-21b3b39d4058"
+			}
+		}
+	}
 }
