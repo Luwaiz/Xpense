@@ -42,17 +42,18 @@ eas build -p ios
 
 4. After the build completes, download the generated file from your Expo dashboard or use the link printed in the terminal.
 
+### App Screenshots
 
-![IMG_20251010_145930](https://github.com/user-attachments/assets/00123b48-31cc-4af8-bdde-f0f301aad84d)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/00123b48-31cc-4af8-bdde-f0f301aad84d" alt="screenshot1" width="250"/>
+  <img src="https://github.com/user-attachments/assets/3555d2bc-d3d5-47d0-a721-bea37af03b16" alt="screenshot2" width="250"/>
+  <img src="https://github.com/user-attachments/assets/8b50c264-8c0d-4623-b6f4-0b5948c25127" alt="screenshot3" width="250"/>
+</p>
 
-![IMG_20251010_145913](https://github.com/user-attachments/assets/3555d2bc-d3d5-47d0-a721-bea37af03b16)
-
-![IMG_20251010_145803](https://github.com/user-attachments/assets/8b50c264-8c0d-4623-b6f4-0b5948c25127)
-
-
-![IMG_20251010_145855](https://github.com/user-attachments/assets/0e9a0bd9-9fee-4db3-8a7d-5e8b407824da)
-
-![IMG_20251010_145827](https://github.com/user-attachments/assets/0be4a95b-b430-436a-97d7-ec715b71ddd9)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0e9a0bd9-9fee-4db3-8a7d-5e8b407824da" alt="screenshot4" width="250"/>
+  <img src="https://github.com/user-attachments/assets/0be4a95b-b430-436a-97d7-ec715b71ddd9" alt="screenshot5" width="250"/>
+</p>
 
 
 
