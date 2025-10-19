@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     ActivityIndicator: {
 		marginTop: 16,
 	},
+    text:{
+        fontSize: 18,
+        color: '#333',
+        marginBottom: 8,
+        alignSelf: 'center',
+    }
     
 })
 export default styles

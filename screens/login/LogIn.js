@@ -55,10 +55,14 @@ const LogIn = ({ navigation }) => {
 				await UserProfileHook();
 				setLoading(false);
 			} catch (e) {
-				console.log("error", e.response.data.error);
+				console.log("error", e.response);
 				setError(e.response.data.error);
 				setLoading(false);
 			}
+			if (error.response?.status === 503) {
+				console.log("⏳ Retrying login in 5 seconds...");
+				setTimeout(handleLogin, 5000);
+			  }
 		}
 	};
 

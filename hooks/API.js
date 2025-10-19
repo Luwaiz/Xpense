@@ -9,7 +9,7 @@ export default {
 	saveAvatar: `${url}/auth/saveAvatar`,
 	getProfile: `${url}/auth/getProfile`,
 	updateProfile: `${url}/auth/updateProfile`,
-	requestOtp:`${url}/auth/reqOTP`,
+	requestOtp: `${url}/auth/reqOTP`,
 	verifyOtp: `${url}/auth/verifyOTP`,
 
 	// Expense API's
@@ -19,7 +19,7 @@ export default {
 	getRecentExpenses: `${url}/expense/recentExpenses`,
 	weeklyExpenses: `${url}/expense/weeklyExpenses`,
 	monthlyExpenses: `${url}/expense/monthlyExpenses`,
-    deleteExpense: `${url}/expense/deleteExpenses`,
+	deleteExpense: `${url}/expense/deleteExpenses`,
 	updateExpense: `${url}/expense/updateExpenses`,
 	downloadPDF: `${url}/expense`,
 	downloadExcel: `${url}/expense`,
@@ -27,7 +27,9 @@ export default {
 	//Budget API's
 	createBudget: `${url}/budget/createBudget`,
 	getBudgets: `${url}/budget/getBudgets`,
-	getBudgetCategories: `${url}/budget/getBudgetCategory/expenses`, 
-	updateBudget:`${url}/budget/updateBudget`,
-	deleteBudget:`${url}/budget/deleteBudget`
+	getBudgetCategories: `${url}/budget/getBudgetCategory/expenses`,
+	updateBudget: `${url}/budget/updateBudget`,
+	deleteBudget: `${url}/budget/deleteBudget`,
+	//notifications
+	savePushToken: `${url}/auth/savePushToken`,
 };

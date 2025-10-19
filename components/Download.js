@@ -102,7 +102,7 @@ const DownloadExpense = ({ modal, setModal }) => {
 				encoding: FileSystem.EncodingType.Base64,
 			});
 	
-			Alert.alert("✅ Download Successful", `File saved at: ${fileUri}`);
+			Alert.alert("✅ Download Successful");
 	
 			// ✅ Ensure correct MIME type for Excel
 			await Share.open({
@@ -162,7 +162,7 @@ const DownloadExpense = ({ modal, setModal }) => {
 							onPress={() => setOpenEndPicker(true)}
 						>
 							<Text style={styles.boldText}>
-								📅 End Date:
+								📅 End Date:{" "}
 								<Text style={{ fontWeight: "300", marginLeft: "auto" }}>
 									{endDate.toDateString()}
 								</Text>

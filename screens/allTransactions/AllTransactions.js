@@ -62,9 +62,9 @@ const AllTransactions = ({ viewChart }) => {
 					<Ionicons name="calendar-outline" size={24} color="black" />
 				</View>
 				<View style={styles.cont}>
-					<Text>Filter</Text>
+					{/* <Text>Filter</Text>
 
-					<Ionicons name="filter-outline" size={18} color="black" />
+					<Ionicons name="filter-outline" size={18} color="black" /> */}
 				</View>
 			</View>
 			<View style={styles.Buttons}>

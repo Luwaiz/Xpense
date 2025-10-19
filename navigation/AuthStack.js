@@ -8,6 +8,7 @@ import OTPVerification from "../screens/otpVerification/OTPVerification";
 import Header from "../components/Header";
 import PIN from "../screens/pin/PIN";
 import SuccessPin from "../screens/successPin/SuccessPin";
+import Notify from "../hooks/ReactNotification";
 const Stack = createNativeStackNavigator();
 
 // Authentication screens
@@ -27,9 +28,10 @@ const AuthStack = () => {
 			/>
 			<Stack.Screen name="PIN" component={PIN} />
 			<Stack.Screen name="SuccessPin" component={SuccessPin} />
-			{/* <Stack.Screen name="Notify" component={Notify} /> */}
+			<Stack.Screen name="Notify" component={Notify} />
 		</Stack.Navigator>
 	);
+	
 };
 
 export default AuthStack;

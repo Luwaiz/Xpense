@@ -20,6 +20,7 @@ import TransactionBox from "../../components/TransactionBox";
 import NoExpense from "../../assets/svg/NoExpense.svg";
 import CreateBudget from "../../components/CreateBudget";
 import { useFocusEffect } from "@react-navigation/native";
+import { registerForPushNotificationsAsync } from "../../hooks/ReactNotification";
 
 const HomePage = ({ navigation }) => {
 	const [data, setData] = useState([]);
@@ -44,6 +45,17 @@ const HomePage = ({ navigation }) => {
 			setLoading(false);
 		}
 	};
+	
+	useEffect(() => {
+		registerForPushNotificationsAsync().then((token) => {
+			if (token) {
+				console.log("📲 Push Token Received:", token);
+			} else {
+				console.warn("⚠️ No push token received!");
+			}
+		});
+	}, []);
+	
 
 	useFocusEffect(
 		useCallback(() => {
