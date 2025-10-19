@@ -33,7 +33,7 @@
    yarn start
 
    
---- This project helped me understand the process of integrating resuable components together and managing global states effectively. I was able to get hands on experience on push notificatoons as well as pdf and excel file genration from the database. It is quite an interesting project which is still undergoing regular updates.
+> This project helped me understand the process of integrating resuable components together and managing global states effectively. I was able to get hands on experience on push notificatoons as well as pdf and excel file genration from the database. It is quite an interesting project which is still undergoing regular updates.
    
 ## Contributing
 
@@ -50,5 +50,5 @@ This project is licensed under the MIT License
 Eluwa Emmanuel
   | Gmail - emmaeluwa2021@gmail.com
   | LinkedIn - https://www.linkedin.com/in/emmanuel-eluwa-138606276/
-  | Twitter - eluwaiz
+  | Twitter - https://x.com/EmmanuelEluwa9
 
