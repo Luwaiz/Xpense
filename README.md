@@ -27,10 +27,20 @@
    ```(using bash)
    git clone https://github.com/Luwaiz/Xpense.git
    cd Xpense
-2. Install the dependencies
-  yarn install
-3. Run the project
-   yarn start
+   yarn install
+2. Ensure you have Expo CLI or EAS CLI installed:
+
+npm install -g eas-cli
+
+
+3. Build the app for your platform:
+
+eas build -p android
+# or
+eas build -p ios
+
+
+4. After the build completes, download the generated file from your Expo dashboard or use the link printed in the terminal.
 
    
 > This project helped me understand the process of integrating resuable components together and managing global states effectively. I was able to get hands on experience on push notificatoons as well as pdf and excel file genration from the database. It is quite an interesting project which is still undergoing regular updates.
