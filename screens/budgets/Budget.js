@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	View,
 	Text,
@@ -21,13 +21,11 @@ import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import CreateBudget from "../../components/CreateBudget";
 import EditBudget from "../../components/EditBudget";
-import { useFocusEffect } from "@react-navigation/native";
 import * as Notifications from "expo-notifications";
 
 
 const Budget = ({ navigation }) => {
 	// Sample budget data
-	const [budgets, setBudgets] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [refresh, setRefresh] = useState(false);
 	const [editMode, setEditMode] = useState(false);
@@ -40,15 +38,19 @@ const Budget = ({ navigation }) => {
 	});
 
 	const token = AuthStore((state) => state.token);
+	const budgets = AuthStore((state) => state.budgets);
+	const setBudgets = AuthStore((state) => state.setBudgets);
+	const refreshBudgets = AuthStore((state) => state.refreshBudgets);
 
 	const formatDate = (isoString) => {
 		const date = new Date(isoString);
 		return date.toLocaleString("en-GB");
 	};
 
-	const getBudgets = async () => {
-		setLoading(true);
+	const intervalRef = useRef(null);
 
+	const getBudgets = async (silent = false) => {
+		if (!silent) setLoading(true);
 		const header = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -57,11 +59,11 @@ const Budget = ({ navigation }) => {
 		try {
 			const response = await axios.get(API.getBudgets, header);
 			console.log(response.data);
-			setBudgets(response.data);
-			setLoading(false);
+			setBudgets([...response.data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
 		} catch (e) {
 			console.log(e);
-			setLoading(false);
+		} finally {
+			if (!silent) setLoading(false);
 		}
 	};
 
@@ -97,14 +99,15 @@ const Budget = ({ navigation }) => {
 
 	const onRefresh = async () => {
 		setRefresh(true);
-		getBudgets();
+		await getBudgets(true);
 		setRefresh(false);
 	};
-	useFocusEffect(
-		useCallback(() => {
-			getBudgets(); // Fetch recent expenses when the screen is focused
-		}, [])
-	);
+
+	useEffect(() => {
+		getBudgets(budgets.length > 0);
+		intervalRef.current = setInterval(() => getBudgets(true), 30000);
+		return () => clearInterval(intervalRef.current);
+	}, []);
 
 	const ViewExpenses = async (BudgetId) => {
 		if (BudgetId !== "") {
@@ -138,11 +141,9 @@ const Budget = ({ navigation }) => {
 					);
 					console.log("delete success", response.data);
 					setLongPress(false);
-					setBudgets((prevBudgets) =>
-						prevBudgets.filter((b) => b._id !== budgetId)
-					);
-
+					setBudgets(budgets.filter((b) => b._id !== budgetId));
 					setUpdating((prevState) => ({ ...prevState, deleting: false }));
+					refreshBudgets();
 				} catch (e) {
 					console.log("error deleting", e.response.data);
 					setUpdating((prevState) => ({ ...prevState, deleting: false }));

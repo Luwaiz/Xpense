@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { ActivityIndicator, View } from "react-native";
 import Onboarding from "../screens/onboarding/Onboarding";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthStack from "./AuthStack";
@@ -12,7 +13,16 @@ const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
 	const token = AuthStore((state) => state.token);
+	const setToken = AuthStore((state) => state.setToken);
 	const [firstLaunch, setFirstLaunch] = useState(true);
+	const [restoring, setRestoring] = useState(true);
+
+	useEffect(() => {
+		AsyncStorage.getItem("token").then((saved) => {
+			if (saved) setToken(saved);
+			setRestoring(false);
+		});
+	}, []);
 
 
 	// const registerForPushNotificationsAsync = async () => {
@@ -58,6 +68,14 @@ export default function Navigation() {
 	// useEffect(() => {
 	// 	OnBoardState();
 	// }, []);
+	if (restoring) {
+		return (
+			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+				<ActivityIndicator size="large" />
+			</View>
+		);
+	}
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>

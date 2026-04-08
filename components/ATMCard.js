@@ -7,6 +7,15 @@ import AuthStore from "../hooks/ZustandStore";
 
 const ATMCard = () => {
 	const name = AuthStore((state) => state.name);
+	const email = AuthStore((state) => state.email);
+
+	const today = new Date();
+	const formattedDate = today.toLocaleDateString("en-GB", {
+		weekday: "long",
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	});
 
 	return (
 		<LinearGradient
@@ -17,25 +26,18 @@ const ATMCard = () => {
 			style={styles.container}
 		>
 			<View style={styles.topContainer}>
-				<Text style={styles.text2}>ATMCard</Text>
+				<View>
+					<Text style={styles.text3}>Account name</Text>
+					<Text style={styles.text4}>{name}</Text>
+					<Text style={styles.text3}>Email</Text>
+					<Text style={styles.text4}>{email}</Text>
+				</View>
 				<Logo width={50} height={50} />
 			</View>
-			<View style={styles.cardNumber}>
-				<Text style={styles.text3}>Card number</Text>
-				<Text style={styles.text1}>1231 3221 3221 3221</Text>
-			</View>
 			<View style={styles.bottom}>
-				<View>
-					<Text style={styles.text3}>Card holder name</Text>
-					<Text style={styles.text4}>{name}</Text>
-				</View>
-				<View>
-					<Text style={styles.text3}>Expiry date</Text>
-					<Text style={styles.text4}>12/22</Text>
-				</View>
-				<View>
-					<Text style={styles.text3}>CVV</Text>
-					<Text style={styles.text4}>123</Text>
+				<View style={{ alignItems: "flex-start" }}>
+					<Text style={styles.text3}>Today</Text>
+					<Text style={styles.text4}>{formattedDate}</Text>
 				</View>
 			</View>
 		</LinearGradient>
@@ -57,17 +59,18 @@ const styles = StyleSheet.create({
 		elevation: 3,
 		width: "90%",
 		height: "29%",
+		alignSelf: "center",
 	},
 	topContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		alignItems: "center",
+		alignItems: "flex-start",
 	},
 	cardNumber: {
 		marginTop: 10,
 	},
 	text1: {
-		fontSize: 18,
+		fontSize: 14,
 		color: "white",
 		fontWeight: "bold",
 	},
@@ -76,17 +79,19 @@ const styles = StyleSheet.create({
 		color: "white",
 	},
 	text3: {
-		fontSize: 9,
-		color: "white",
+		fontSize: 11,
+		color: "rgba(255,255,255,0.7)",
+		marginTop: 6,
 	},
 	text4: {
-		fontSize: 14,
+		fontSize: 16,
 		color: "white",
+		fontWeight: "500",
 	},
 	bottom: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginTop: "auto",
-		width: "85%",
+		width: "100%",
 	},
 });

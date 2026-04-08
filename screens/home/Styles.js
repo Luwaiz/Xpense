@@ -42,11 +42,9 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 	icon: {
-		borderWidth: 1,
-		borderColor: colors.secondaryGrey,
 		width: 40,
-		borderRadius: "50%",
 		height: 40,
+		borderRadius: 20,
 		alignItems: "center",
 		justifyContent: "center",
 	},

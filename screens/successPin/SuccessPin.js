@@ -4,13 +4,14 @@ import styles from "./Styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Check from "../../assets/svg/success";
 import ActiveButton from "../../components/ActiveButton";
+import AuthStore from "../../hooks/ZustandStore";
 const { width, height } = Dimensions.get("window");
 
-const SuccessPin = ({ navigation }) => {
+const SuccessPin = ({ route }) => {
+	const setToken = AuthStore((state) => state.setToken);
+
 	const navigateToHome = () => {
-		navigation.navigate("AppStack", {
-			screen: "HomePage",
-		});
+		setToken(route.params?.token);
 	};
 
 	return (

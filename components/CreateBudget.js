@@ -26,6 +26,7 @@ const CreateBudget = ({ modal, setModal }) => {
 	const [loading, setLoading] = useState(false);
 
 	const token = AuthStore((state) => state.token);
+	const refreshBudgets = AuthStore((state) => state.refreshBudgets);
 
 	const createBudget = async () => {
 		Keyboard.dismiss();
@@ -49,6 +50,7 @@ const CreateBudget = ({ modal, setModal }) => {
 				console.log(response.data);
 				setLoading(false);
 				setModal(false);
+				refreshBudgets();
 			} catch (error) {
 				console.error(error.response.data);
 				alert("Failed to add expense");

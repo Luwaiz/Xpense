@@ -39,12 +39,9 @@ const Onboarding = ({ navigation }) => {
 		}
 	};
 
-	// function to move to the last page of the flatlist (skip)
+	// function to navigate to the auth screen (skip)
 	const skip = () => {
-		const lastSlide = Slides.length - 1;
-		const offset = lastSlide * width;
-		Ref?.current?.scrollToOffset({ offset });
-		setCurrentId(lastSlide);
+		navigation.navigate("AuthStack", { screen: "AuthOption" });
 	};
 
 	// function to navigate to the app after completing the onboarding

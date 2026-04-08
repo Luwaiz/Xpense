@@ -17,18 +17,19 @@ import NoExpense from "../../assets/svg/NoExpense.svg";
 import DownloadExpense from "../../components/Download";
 
 const AllTransactions = ({ viewChart }) => {
-	const [loading, setLoading] = useState("");
+	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
-	const [expenses, setExpenses] = useState([]);
 	const [Modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const token = AuthStore((state) => state.token);
+	const expenses = AuthStore((state) => state.transactions);
+	const setExpenses = AuthStore((state) => state.setTransactions);
 	const date = new Date();
 	const fullMonth = date.toLocaleDateString("en-US", { month: "long" });
 	const year = date.getFullYear();
 
-	const getExpense = async () => {
-		setLoading(true);
+	const getExpense = async (silent = false) => {
+		if (!silent) setLoading(true);
 		const header = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -37,10 +38,10 @@ const AllTransactions = ({ viewChart }) => {
 		try {
 			const response = await axios.get(API.getExpense, header);
 			setExpenses(response.data);
-			setLoading(false);
 		} catch (err) {
 			console.log(err);
-			setLoading(false);
+		} finally {
+			if (!silent) setLoading(false);
 		}
 	};
 
@@ -49,7 +50,7 @@ const AllTransactions = ({ viewChart }) => {
 	};
 
 	useEffect(() => {
-		getExpense();
+		getExpense(expenses.length > 0);
 	}, []);
 
 	return (

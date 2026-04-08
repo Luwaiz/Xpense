@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "./Styles";
 import InputContainer from "../../components/InputContainer";
@@ -11,6 +11,16 @@ import axios from "axios";
 import API from "../../hooks/API";
 import AddSuccessModal from "../../components/AddSucceessModal";
 
+const Categories = [
+	{ label: "Subscription", value: "Subscription" },
+	{ label: "Transportation", value: "Transportation" },
+	{ label: "Entertainment", value: "Entertainment" },
+	{ label: "Food", value: "Food" },
+	{ label: "Health Insurance", value: "Health Insurance" },
+	{ label: "Shopping", value: "Shopping" },
+	{ label: "Others", value: "Others" },
+];
+
 const Expense = () => {
 	const [name, setName] = useState("");
 	const [category, setCategory] = useState(null);
@@ -21,38 +31,9 @@ const Expense = () => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [loading, setLoading] = useState(false);
-
-	const Categories = [
-		{
-			label: "Subscription",
-			value: "Subscription",
-		},
-		{
-			label: "Transportation",
-			value: "Transportation",
-		},
-		{
-			label: "Entertainment",
-			value: "Entertainment",
-		},
-		{
-			label: "Food",
-			value: "Food",
-		},
-		{
-			label: "Health Insurance",
-			value: "Health Insurance",
-		},
-		{
-			label: "Shopping",
-			value: "Shopping",
-		},
-		{
-			label: "Others",
-			value: "Others",
-		},
-	];
 	const token = AuthStore((state) => state.token);
+	const refreshTransactions = AuthStore((state) => state.refreshTransactions);
+	const refreshRecentExpenses = AuthStore((state) => state.refreshRecentExpenses);
 
 	const createExpense = async (category) => {
 		setLoading(true);
@@ -81,6 +62,8 @@ const Expense = () => {
 				console.log(response.data);
 				setLoading(false);
 				setModal(true);
+				refreshTransactions();
+				refreshRecentExpenses();
 			} catch (error) {
 				console.error(error.response.data);
 				alert("Failed to add expense");
@@ -116,7 +99,11 @@ const Expense = () => {
 	}, []);
 
 	return (
-		<View style={styles.container}>
+		<KeyboardAvoidingView
+			style={styles.container}
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+		>
 			<View style={styles.topContainer}>
 				<Text style={styles.text2}>How much?</Text>
 				<View style={styles.InputContainer}>
@@ -131,7 +118,12 @@ const Expense = () => {
 					/>
 				</View>
 			</View>
-			<View style={styles.sheet}>
+			<ScrollView
+				style={styles.sheet}
+				contentContainerStyle={styles.sheetContent}
+				keyboardShouldPersistTaps="handled"
+				showsVerticalScrollIndicator={false}
+			>
 				<InputContainer
 					placeholder={"Expense name"}
 					onChangeText={(text) => setName(text)}
@@ -159,7 +151,7 @@ const Expense = () => {
 					selectedTextStyle={styles.selectedTextStyle}
 					inputSearchStyle={styles.inputSearchStyle}
 					iconStyle={styles.iconStyle}
-					data={budget} // Use formatted budgets
+					data={budget}
 					maxHeight={300}
 					labelField="label"
 					valueField="value"
@@ -186,7 +178,7 @@ const Expense = () => {
 						loading={loading}
 					/>
 				</View>
-			</View>
+			</ScrollView>
 			{modal && (
 				<AddSuccessModal
 					modal={modal}
@@ -194,7 +186,7 @@ const Expense = () => {
 					text={"Expense Recorded Successfully!"}
 				/>
 			)}
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
 

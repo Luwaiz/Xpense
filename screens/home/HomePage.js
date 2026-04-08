@@ -2,11 +2,10 @@ import {
 	View,
 	Text,
 	ScrollView,
-	FlatList,
 	StatusBar,
 	TouchableOpacity,
 } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Styles";
 import ATMCard from "../../components/ATMCard";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -19,18 +18,20 @@ import { colors } from "../../hooks/Colours";
 import TransactionBox from "../../components/TransactionBox";
 import NoExpense from "../../assets/svg/NoExpense.svg";
 import CreateBudget from "../../components/CreateBudget";
-import { useFocusEffect } from "@react-navigation/native";
 import { registerForPushNotificationsAsync } from "../../hooks/ReactNotification";
 
 const HomePage = ({ navigation }) => {
-	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 	const [modal, setModal] = useState(false);
 	const token = AuthStore((state) => state.token);
+	const data = AuthStore((state) => state.recentExpenses);
+	const setData = AuthStore((state) => state.setRecentExpenses);
 
-	const getRecent = async () => {
-		setLoading(true);
+	const intervalRef = useRef(null);
+
+	const getRecent = async (silent = false) => {
+		if (!silent) setLoading(true);
 		const header = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -39,13 +40,13 @@ const HomePage = ({ navigation }) => {
 		try {
 			const response = await axios.get(API.getRecentExpenses, header);
 			setData(response.data);
-			setLoading(false);
 		} catch (e) {
 			console.log("error", e);
-			setLoading(false);
+		} finally {
+			if (!silent) setLoading(false);
 		}
 	};
-	
+
 	useEffect(() => {
 		registerForPushNotificationsAsync().then((token) => {
 			if (token) {
@@ -55,13 +56,12 @@ const HomePage = ({ navigation }) => {
 			}
 		});
 	}, []);
-	
 
-	useFocusEffect(
-		useCallback(() => {
-			getRecent(); // Fetch recent expenses when the screen is focused
-		}, [])
-	);
+	useEffect(() => {
+		getRecent(data.length > 0);
+		intervalRef.current = setInterval(() => getRecent(true), 30000);
+		return () => clearInterval(intervalRef.current);
+	}, []);
 
 	const createBudget = () => {
 		setModal(true);
@@ -76,42 +76,48 @@ const HomePage = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<StatusBar barStyle={"dark-content"} />
-			<ATMCard />
-			<View style={styles.options}>
-				<TouchableOpacity
-					onPress={() => Expense()}
-					style={styles.optionContainer}
-				>
-					<View style={[styles.icon, { backgroundColor: colors.primary }]}>
-						<FontAwesome5 name="wallet" size={20} color="white" />
-					</View>
-					<Text style={styles.iconText}>Add Expense</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					onPress={() => createBudget()}
-					style={styles.optionContainer}
-				>
-					<View style={[styles.icon, { backgroundColor: "green" }]}>
-						<MaterialCommunityIcons name="piggy-bank" size={24} color="white" />
-					</View>
-					<Text style={styles.iconText}>Create Budget</Text>
-				</TouchableOpacity>
-			</View>
-			<Text style={styles.recentText}>Recent Expenses</Text>
-			<View style={styles.bottom}>
-				{data.length > 0 ? (
-					data?.map((expenses, index) => (
-						<TransactionBox key={index?.toString()} item={expenses} />
-					))
-				) : (
-					<View style={styles.noExpenseCont}>
-						<Text style={styles.noExpenseText}>No Expenses Incurred.</Text>
-						<View style={styles.overlay}>
-							<NoExpense width={200} height={200} />
+			<ScrollView
+				style={styles.scroll}
+				contentContainerStyle={styles.ContentContainer}
+				showsVerticalScrollIndicator={false}
+			>
+				<ATMCard />
+				<View style={styles.options}>
+					<TouchableOpacity
+						onPress={() => Expense()}
+						style={styles.optionContainer}
+					>
+						<View style={[styles.icon, { backgroundColor: colors.primary }]}>
+							<FontAwesome5 name="wallet" size={20} color="white" />
 						</View>
-					</View>
-				)}
-			</View>
+						<Text style={styles.iconText}>Add Expense</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => createBudget()}
+						style={styles.optionContainer}
+					>
+						<View style={[styles.icon, { backgroundColor: "green" }]}>
+							<MaterialCommunityIcons name="piggy-bank" size={24} color="white" />
+						</View>
+						<Text style={styles.iconText}>Create Budget</Text>
+					</TouchableOpacity>
+				</View>
+				<Text style={styles.recentText}>Recent Expenses</Text>
+				<View style={styles.bottom}>
+					{data.length > 0 ? (
+						data?.map((expenses, index) => (
+							<TransactionBox key={index?.toString()} item={expenses} />
+						))
+					) : (
+						<View style={styles.noExpenseCont}>
+							<Text style={styles.noExpenseText}>No Expenses Incurred.</Text>
+							<View style={styles.overlay}>
+								<NoExpense width={200} height={200} />
+							</View>
+						</View>
+					)}
+				</View>
+			</ScrollView>
 			{modal && <CreateBudget modal={modal} setModal={setModal} />}
 		</View>
 	);

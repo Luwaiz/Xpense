@@ -1,70 +1,66 @@
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState, useEffect, useMemo } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { BarChart } from "react-native-gifted-charts";
 import { colors } from "../hooks/Colours";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const GraphChart = ({ Data, option, setSelection }) => {
-	const today = new Date();
-	const dayName = today
-		.toLocaleDateString("en-US", { weekday: "long" })
-		.slice(0, 3); // "Mon"
+	const [selectedLabel, setSelectedLabel] = useState(null);
 
-	const [selected, setSelected] = useState({
-		label: dayName,
-		...Data.find((data) => data.day.slice(0, 3) === dayName) || {},
-	});
+	// Default selection to today's entry when data first loads
+	useEffect(() => {
+		if (!Data || Data.length === 0) return;
+		const today = new Date()
+			.toLocaleDateString("en-US", { weekday: "long" })
+			.slice(0, 3);
+		const todayEntry = Data.find((d) => d.day?.slice(0, 3) === today);
+		const defaultEntry = todayEntry || Data[Data.length - 1];
+		if (defaultEntry) {
+			const label = defaultEntry.day.slice(0, 3);
+			setSelectedLabel(label);
+			setSelection({ ...defaultEntry, label });
+		}
+	}, [Data]);
 
-	// ✅ Use useMemo to ensure `barData` updates correctly when `selected` changes
 	const barData = useMemo(() => {
 		return (Data || []).map((data) => {
-			const label = data.day ? data.day.slice(0, 3) : "N/A"; // Safe fallback
+			const label = data.day ? data.day.slice(0, 3) : "N/A";
 			return {
 				value: data.totalAmount || 0,
-				label: label,
-				frontColor: selected.label === label ? colors.primary : colors.primaryGrey, // ✅ Dynamically updates color
+				label,
+				frontColor: selectedLabel === label ? colors.primary : colors.primaryGrey,
 			};
 		});
-	}, [Data, selected]);
+	}, [Data, selectedLabel]);
 
-	// Update parent component when selection changes
-	useEffect(() => {
-		setSelection(selected);
-	}, [selected]);
+	const onPress = useCallback((item) => {
+		const match = Data.find((d) => d.day?.slice(0, 3) === item.label);
+		if (match) {
+			setSelectedLabel(item.label);
+			setSelection({ ...match, label: item.label });
+		}
+	}, [Data, setSelection]);
 
 	return (
-		<ScrollView horizontal contentContainerStyle={{ padding: 0 }}>
-			<View style={styles.container}>
-				<BarChart
-					barWidth={30}
-					barBorderRadius={5}
-					frontColor={colors.primaryGrey}
-					data={barData} // ✅ Now correctly updates
-					yAxisThickness={0}
-					xAxisThickness={0}
-					dashWidth={0}
-					yAxisTextStyle={{ display: "none" }}
-					onPress={(item) => {
-						const filteredData = Data.find(
-							(data) => data.day.slice(0, 3) === item.label
-						);
-						if (filteredData) {
-							setSelected({
-								...filteredData, // ✅ Preserve all data fields
-								label: item.label, // ✅ Ensure label updates correctly
-							});
-						}
-					}}
-					initialSpacing={0}
-					yAxisLabelContainerStyle={{ width: 0 }}
-					yAxisTextNumberOfLines={0}
-					yAxisLabelWidth={0}
-					endSpacing={0}
-					spacing={option === "Weekly" ? 15 : 5}
-				/>
-			</View>
-		</ScrollView>
+		<View style={styles.container}>
+			<BarChart
+				barWidth={30}
+				barBorderRadius={5}
+				frontColor={colors.primaryGrey}
+				data={barData}
+				yAxisThickness={0}
+				xAxisThickness={0}
+				dashWidth={0}
+				hideYAxisText
+				onPress={onPress}
+				initialSpacing={10}
+				endSpacing={10}
+				spacing={option === "Weekly" ? 15 : 5}
+				width={width - 60}
+				noOfSections={4}
+			/>
+		</View>
 	);
 };
 

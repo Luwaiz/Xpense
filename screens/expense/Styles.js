@@ -7,18 +7,21 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.primary,
 	},
 	topContainer: {
-		flex: 0.3,
+		height: 200,
 		backgroundColor: colors.primary,
 		justifyContent: "flex-end",
 		padding: 16,
 	},
 	sheet: {
-		flex: 0.7,
-		paddingVertical: 30,
+		flex: 1,
 		backgroundColor: "white",
 		borderTopLeftRadius: 20,
 		borderTopRightRadius: 20,
 		paddingHorizontal: 16,
+	},
+	sheetContent: {
+		paddingVertical: 30,
+		flexGrow: 1,
 	},
 	InputContainer: {
 		flexDirection: "row",
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	button: {
-		marginTop: "auto",
+		marginTop: 24,
 	},
 	attachment: {
 		height: 48,
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: "center",
 		borderStyle: "dashed",
-		marginTop: "auto",
+		marginTop: 16,
 		justifyContent: "center",
 		flexDirection: "row",
 		gap: 10,

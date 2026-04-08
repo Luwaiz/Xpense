@@ -62,19 +62,10 @@ const OTPVerification = ({ navigation }) => {
 		try {
 			const response = await axios.post(API.Register, request);
 			console.log(response.data);
-			setModal(true)
-			
-			NextPage(response.data.token);
+			navigation.navigate("SuccessPin", { token: response.data.token });
 		} catch (e) {
 			console.log("Error signing up", e.response.data);
 			setLoading(false);
-		}
-	};
-
-	const NextPage = async (token) => {
-		if(modal === false){
-			setToken(token)
-			await UserProfileHook();
 		}
 	};
 	return (
@@ -113,15 +104,7 @@ const OTPVerification = ({ navigation }) => {
 					/>
 				</View>
 			</View>
-			{modal && (
-				<AddSuccessModal
-					text={"TEmail was verified Successfully"}
-					modal={modal}
-					setModal={setModal}
-					NextPage={NextPage()}
-				/>
-			)}
-		</View>
+				</View>
 	);
 };
 
